@@ -1,0 +1,2 @@
+# socman
+Managing soccerteams
