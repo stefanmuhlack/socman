@@ -15,3 +15,6 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 # Add similar routes for Club, Team, Player, League, Tournament, Match
+@router.get("/users/me", response_model=schemas.User)
+async def read_users_me(current_user: schemas.User = Depends(auth.get_current_active_user)):
+    return current_user
