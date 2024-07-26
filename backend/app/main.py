@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to Soccer Team Management API"}
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+from . import crud, models, schemas, auth
+from .database import SessionLocal, engine
