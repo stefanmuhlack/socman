@@ -81,3 +81,57 @@ def delete_team(db: Session, team_id: int):
     return db_team
 
 # Add similar CRUD functions for Player, League, Tournament, Match
+
+
+# Player Rating CRUD operations
+
+def rate_player(db: Session, player_id: int, rating: schemas.RatingCreate):
+    db_rating = models.Rating(
+        player_id=player_id, 
+        metric=rating.metric, 
+        value=rating.value
+    )
+    db.add(db_rating)
+    db.commit()
+    db.refresh(db_rating)
+    return db_rating
+
+def get_player_ratings(db: Session, player_id: int):
+    return db.query(models.Rating).filter(models.Rating.player_id == player_id).all()
+
+# Additional CRUD functions for managing metrics
+
+def create_metric(db: Session, metric: schemas.MetricCreate):
+    db_metric = models.Metric(
+        name=metric.name,
+        description=metric.description,
+        classification=metric.classification
+    )
+    db.add(db_metric)
+    db.commit()
+    db.refresh(db_metric)
+    return db_metric
+
+def get_metrics(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Metric).offset(skip).limit(limit).all()
+
+def get_metric(db: Session, metric_id: int):
+    return db.query(models.Metric).filter(models.Metric.id == metric_id).first()
+
+def update_metric(db: Session, metric: schemas.MetricUpdate):
+    db_metric = get_metric(db, metric.id)
+    if db_metric:
+        db_metric.name = metric.name
+        db_metric.description = metric.description
+        db_metric.classification = metric.classification
+        db.commit()
+        db.refresh(db_metric)
+        return db_metric
+    return None
+
+def delete_metric(db: Session, metric_id: int):
+    db_metric = get_metric(db, metric_id)
+    if db_metric:
+        db.delete(db_metric)
+        db.commit()
+    return db_metric
