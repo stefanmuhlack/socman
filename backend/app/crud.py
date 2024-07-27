@@ -44,3 +44,40 @@ def delete_club(db: Session, club_id: int):
     return db_club
 
 # Add similar CRUD functions for Team, Player, League, Tournament, Match
+
+
+# Team CRUD operations
+
+def create_team(db: Session, team: schemas.TeamCreate):
+    db_team = models.Team(name=team.name, club_id=team.club_id, league_id=team.league_id, tournament_id=team.tournament_id)
+    db.add(db_team)
+    db.commit()
+    db.refresh(db_team)
+    return db_team
+
+def get_teams(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Team).offset(skip).limit(limit).all()
+
+def get_team(db: Session, team_id: int):
+    return db.query(models.Team).filter(models.Team.id == team_id).first()
+
+def update_team(db: Session, team: schemas.TeamUpdate):
+    db_team = get_team(db, team.id)
+    if db_team:
+        db_team.name = team.name
+        db_team.club_id = team.club_id
+        db_team.league_id = team.league_id
+        db_team.tournament_id = team.tournament_id
+        db.commit()
+        db.refresh(db_team)
+        return db_team
+    return None
+
+def delete_team(db: Session, team_id: int):
+    db_team = get_team(db, team_id)
+    if db_team:
+        db.delete(db_team)
+        db.commit()
+    return db_team
+
+# Add similar CRUD functions for Player, League, Tournament, Match
