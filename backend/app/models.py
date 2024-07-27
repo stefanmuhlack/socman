@@ -49,3 +49,20 @@ class Match(Base):
     team2_id = Column(Integer, ForeignKey('teams.id'))
     date = Column(DateTime)
     result = Column(String)
+
+
+class Rating(Base):
+    __tablename__ = "ratings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    player_id = Column(Integer, ForeignKey("players.id"))
+    metric = Column(String, index=True)
+    value = Column(Integer)
+
+class Metric(Base):
+    __tablename__ = "metrics"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(String, index=True)
+    classification = Column(String, index=True)
