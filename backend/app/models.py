@@ -51,18 +51,27 @@ class Match(Base):
     result = Column(String)
 
 
-class Rating(Base):
-    __tablename__ = "ratings"
-
+class MatchFact(Base):
+    __tablename__ = 'match_facts'
     id = Column(Integer, primary_key=True, index=True)
-    player_id = Column(Integer, ForeignKey("players.id"))
-    metric = Column(String, index=True)
-    value = Column(Integer)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    kilometers_run = Column(Float)
+    sprints = Column(Integer)
+    intensive_runs = Column(Integer)
+    distance_run = Column(Float)
+    match_date = Column(DateTime)
 
-class Metric(Base):
-    __tablename__ = "metrics"
-
+class PlayerRating(Base):
+    __tablename__ = 'player_ratings'
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    description = Column(String, index=True)
-    classification = Column(String, index=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    coach_id = Column(Integer, ForeignKey('users.id'))
+    ball_manipulation = Column(Integer)
+    kicking_ability = Column(Integer)
+    passing_ability = Column(Integer)
+    duel_tackling = Column(Integer)
+    field_coverage = Column(Integer)
+    blocking_ability = Column(Integer)
+    game_strategy = Column(Integer)
+    playmaking_risk = Column(Integer)
+    rating_date = Column(DateTime)
