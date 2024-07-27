@@ -1,0 +1,18 @@
+<div>
+  <h2>Create Match Fact</h2>
+  <form (ngSubmit)="createMatchFact()">
+    <label>Player ID:</label>
+    <input [(ngModel)]="matchFact.player_id" name="player_id" required>
+    <label>Kilometers Run:</label>
+    <input [(ngModel)]="matchFact.kilometers_run" name="kilometers_run" required>
+    <label>Sprints:</label>
+    <input [(ngModel)]="matchFact.sprints" name="sprints" required>
+    <label>Intensive Runs:</label>
+    <input [(ngModel)]="matchFact.intensive_runs" name="intensive_runs" required>
+    <label>Distance Run:</label>
+    <input [(ngModel)]="matchFact.distance_run" name="distance_run" required>
+    <label>Match Date:</label>
+    <input [(ngModel)]="matchFact.match_date" name="match_date" type="date" required>
+    <button type="submit">Create Match Fact</button>
+  </form>
+</div>
