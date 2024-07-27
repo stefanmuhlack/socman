@@ -1,0 +1,28 @@
+<div>
+  <h2>Create Player Rating</h2>
+  <form (ngSubmit)="createPlayerRating()">
+    <label>Player ID:</label>
+    <input [(ngModel)]="playerRating.player_id" name="player_id" required>
+    <label>Coach ID:</label>
+    <input [(ngModel)]="playerRating.coach_id" name="coach_id" required>
+    <label>Ball Manipulation:</label>
+    <input [(ngModel)]="playerRating.ball_manipulation" name="ball_manipulation" required>
+    <label>Kicking Ability:</label>
+    <input [(ngModel)]="playerRating.kicking_ability" name="kicking_ability" required>
+    <label>Passing Ability:</label>
+    <input [(ngModel)]="playerRating.passing_ability" name="passing_ability" required>
+    <label>Duel Tackling:</label>
+    <input [(ngModel)]="playerRating.duel_tackling" name="duel_tackling" required>
+    <label>Field Coverage:</label>
+    <input [(ngModel)]="playerRating.field_coverage" name="field_coverage" required>
+    <label>Blocking Ability:</label>
+    <input [(ngModel)]="playerRating.blocking_ability" name="blocking_ability" required>
+    <label>Game Strategy:</label>
+    <input [(ngModel)]="playerRating.game_strategy" name="game_strategy" required>
+    <label>Playmaking Risk:</label>
+    <input [(ngModel)]="playerRating.playmaking_risk" name="playmaking_risk" required>
+    <label>Rating Date:</label>
+    <input [(ngModel)]="playerRating.rating_date" name="rating_date" type="date" required>
+    <button type="submit">Create Player Rating</button>
+  </form>
+</div>
