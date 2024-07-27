@@ -79,6 +79,33 @@ def delete_team(db: Session, team_id: int):
         db.delete(db_team)
         db.commit()
     return db_team
+# MatchFact CRUD operations
+
+def create_match_fact(db: Session, match_fact: schemas.MatchFactCreate):
+    db_match_fact = models.MatchFact(**match_fact.dict())
+    db.add(db_match_fact)
+    db.commit()
+    db.refresh(db_match_fact)
+    return db_match_fact
+
+def get_match_facts(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.MatchFact).offset(skip).limit(limit).all()
+
+def get_match_fact(db: Session, match_fact_id: int):
+    return db.query(models.MatchFact).filter(models.MatchFact.id == match_fact_id).first()
+
+# PlayerRating CRUD operations
+
+def create_player_rating(db: Session, player_rating: schemas.PlayerRatingCreate):
+    db_player_rating = models.PlayerRating(**player_rating.dict())
+    db.add(db_player_rating)
+    db.commit()
+    db.refresh(db_player_rating)
+    return db_player_rating
+
+def get_player_ratings(db: Session, player_id: int):
+    return db.query(models.PlayerRating).filter(models.PlayerRating.player_id == player_id).all()
+
 
 # Add similar CRUD functions for Player, League, Tournament, Match
 
