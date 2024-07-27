@@ -24,4 +24,82 @@ class Club(ClubBase):
     class Config:
         orm_mode = True
 
+class MatchFactBase(BaseModel):
+    player_id: int
+    kilometers_run: float
+    sprints: int
+    intensive_runs: int
+    distance_run: float
+    match_date: datetime
+
+class MatchFactCreate(MatchFactBase):
+    pass
+
+class MatchFact(MatchFactBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+class PlayerRatingBase(BaseModel):
+    player_id: int
+    coach_id: int
+    ball_manipulation: int
+    kicking_ability: int
+    passing_ability: int
+    duel_tackling: int
+    field_coverage: int
+    blocking_ability: int
+    game_strategy: int
+    playmaking_risk: int
+    rating_date: datetime
+
+class PlayerRatingCreate(PlayerRatingBase):
+    pass
+
+class PlayerRating(PlayerRatingBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
 # Define similar schemas for Team, Player, League, Tournament, Match
+class MatchFactBase(BaseModel):
+    player_id: int
+    kilometers_run: float
+    sprints: int
+    intensive_runs: int
+    distance_run: float
+    match_date: datetime
+
+class MatchFactCreate(MatchFactBase):
+    pass
+
+class MatchFact(MatchFactBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+class PlayerRatingBase(BaseModel):
+    player_id: int
+    coach_id: int
+    ball_manipulation: int
+    kicking_ability: int
+    passing_ability: int
+    duel_tackling: int
+    field_coverage: int
+    blocking_ability: int
+    game_strategy: int
+    playmaking_risk: int
+    rating_date: datetime
+
+class PlayerRatingCreate(PlayerRatingBase):
+    pass
+
+class PlayerRating(PlayerRatingBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
