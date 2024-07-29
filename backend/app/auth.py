@@ -69,3 +69,35 @@ async def get_current_user(db: Session = Depends(SessionLocal), token: str = Dep
 
 async def get_current_active_user(current_user: schemas.User = Depends(get_current_user)):
     return current_user
+
+async def get_current_user_role(current_user: schemas.User = Depends(get_current_active_user)):
+    if current_user.role not in ["super-admin", "admin", "coach", "player"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions",
+        )
+    return current_user.role
+
+async def get_current_super_admin(current_user: schemas.User = Depends(get_current_active_user)):
+    if current_user.role != "super-admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions",
+        )
+    return current_user
+
+async def get_current_admin_or_higher(current_user: schemas.User = Depends(get_current_active_user)):
+    if current_user.role not in ["super-admin", "admin"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions",
+        )
+    return current_user
+
+async def get_current_coach_or_higher(current_user: schemas.User = Depends(get_current_active_user)):
+    if current_user.role not in ["super-admin", "admin", "coach"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Insufficient permissions",
+        )
+    return current_user
