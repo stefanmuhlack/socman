@@ -4,10 +4,9 @@ import { CreateMatchFactComponent } from './components/create-match-fact/create-
 import { CreatePlayerRatingComponent } from './components/create-player-rating/create-player-rating.component';
 import { AuthGuard } from './services/auth.guard';
 
-
 const routes: Routes = [
-  { path: 'create-match-fact', component: CreateMatchFactComponent },
-  { path: 'create-player-rating', component: CreatePlayerRatingComponent },
+  { path: 'create-match-fact', component: CreateMatchFactComponent, canActivate: [AuthGuard] },
+  { path: 'create-player-rating', component: CreatePlayerRatingComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
