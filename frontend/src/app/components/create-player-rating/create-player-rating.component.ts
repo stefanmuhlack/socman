@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PlayerRatingService } from '../../services/player-rating.service';
 import { PlayerRating } from '../../models/player-rating.model';
+import { DynamicMetricService } from '../../services/dynamic-metric.service';
 
 @Component({
   selector: 'app-create-player-rating',
@@ -10,20 +11,33 @@ export class CreatePlayerRatingComponent {
   playerRating: PlayerRating = {
     player_id: 0,
     coach_id: 0,
-    ball_manipulation: 0,
-    kicking_ability: 0,
-    passing_ability: 0,
-    duel_tackling: 0,
-    field_coverage: 0,
-    blocking_ability: 0,
-    game_strategy: 0,
-    playmaking_risk: 0,
+    metrics: {},
     rating_date: new Date()
   };
 
-  constructor(private playerRatingService: PlayerRatingService) { }
+  availableMetrics: { name: string, value: number }[] = [];
+
+  constructor(
+    private playerRatingService: PlayerRatingService,
+    private dynamicMetricService: DynamicMetricService
+  ) {
+    this.loadMetrics();
+  }
+
+  loadMetrics() {
+    this.dynamicMetricService.getDynamicMetrics().subscribe((metrics) => {
+      this.availableMetrics = metrics.map((metric) => ({
+        name: metric.name,
+        value: 0
+      }));
+    });
+  }
 
   createPlayerRating() {
+    this.playerRating.metrics = this.availableMetrics.reduce((acc, metric) => {
+      acc[metric.name] = metric.value;
+      return acc;
+    }, {});
     this.playerRatingService.createPlayerRating(this.playerRating).subscribe(
       () => {
         // Handle success
