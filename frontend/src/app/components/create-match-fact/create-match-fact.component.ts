@@ -19,6 +19,13 @@ export class CreateMatchFactComponent {
   constructor(private matchFactService: MatchFactService) { }
 
   createMatchFact() {
-    this.matchFactService.createMatchFact(this.matchFact).subscribe();
+    this.matchFactService.createMatchFact(this.matchFact).subscribe(
+      () => {
+        // Handle success
+      },
+      error => {
+        // Handle error
+      }
+    );
   }
 }
