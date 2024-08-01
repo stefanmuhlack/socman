@@ -240,3 +240,40 @@ def delete_match(db: Session, match_id: int):
         return db_match
     logger.warning(f"Match {match_id} not found for deletion")
     return None
+
+# Dynamic Metric CRUD operations
+def create_dynamic_metric(db: Session, metric: schemas.DynamicMetricCreate):
+    db_metric = models.DynamicMetric(**metric.dict())
+    db.add(db_metric)
+    db.commit()
+    db.refresh(db_metric)
+    logger.info(f"Created dynamic metric {metric.name}")
+    return db_metric
+
+def get_dynamic_metrics(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.DynamicMetric).offset(skip).limit(limit).all()
+
+def get_dynamic_metric(db: Session, metric_id: int):
+    return db.query(models.DynamicMetric).filter(models.DynamicMetric.id == metric_id).first()
+
+def update_dynamic_metric(db: Session, metric: schemas.DynamicMetricUpdate):
+    db_metric = get_dynamic_metric(db, metric.id)
+    if db_metric:
+        for var, value in vars(metric).items():
+            setattr(db_metric, var, value) if value else None
+        db.commit()
+        db.refresh(db_metric)
+        logger.info(f"Updated dynamic metric {metric.id}")
+        return db_metric
+    logger.warning(f"Dynamic metric {metric.id} not found for update")
+    return None
+
+def delete_dynamic_metric(db: Session, metric_id: int):
+    db_metric = get_dynamic_metric(db, metric_id)
+    if db_metric:
+        db.delete(db_metric)
+        db.commit()
+        logger.info(f"Deleted dynamic metric {metric_id}")
+        return db_metric
+    logger.warning(f"Dynamic metric {metric_id} not found for deletion")
+    return None
