@@ -24,6 +24,13 @@ export class CreatePlayerRatingComponent {
   constructor(private playerRatingService: PlayerRatingService) { }
 
   createPlayerRating() {
-    this.playerRatingService.createPlayerRating(this.playerRating).subscribe();
+    this.playerRatingService.createPlayerRating(this.playerRating).subscribe(
+      () => {
+        // Handle success
+      },
+      error => {
+        // Handle error
+      }
+    );
   }
 }
