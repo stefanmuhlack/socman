@@ -68,6 +68,22 @@ class PlayerTeam(PlayerTeamBase):
     class Config:
         orm_mode = True
 
+# Transfer Schemas
+class TransferBase(BaseModel):
+    player_id: int
+    from_team_id: int
+    to_team_id: int
+    transfer_date: datetime
+
+class TransferCreate(TransferBase):
+    pass
+
+class Transfer(TransferBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
 # Tournament Schemas
 class TournamentBase(BaseModel):
     name: str
@@ -84,18 +100,29 @@ class Tournament(TournamentBase):
     class Config:
         orm_mode = True
 
-# Player Rating Schemas
-class PlayerRatingBase(BaseModel):
-    player_id: int
-    coach_id: int
-    metrics: Dict[str, int]  # Dynamic metrics stored as a dictionary
-    rating_date: datetime
+# Match Schemas
+class MatchBase(BaseModel):
+    team1_id: int
+    team2_id: int
+    date: datetime
+    result: str
+    goals_team1: int
+    goals_team2: int
+    extra_time: bool
+    penalty_shootout: bool
 
-class PlayerRatingCreate(PlayerRatingBase):
+class MatchCreate(MatchBase):
     pass
 
-class PlayerRating(PlayerRatingBase):
+class Match(MatchBase):
     id: int
 
     class Config:
         orm_mode = True
+
+class MatchResultUpdate(BaseModel):
+    result: str
+    goals_team1: int
+    goals_team2: int
+    extra_time: bool
+    penalty_shootout: bool
