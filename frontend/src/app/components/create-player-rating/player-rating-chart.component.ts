@@ -31,6 +31,7 @@ export class PlayerRatingChartComponent implements OnInit {
     this.playerRatingService.getPlayerRatings(this.playerId).subscribe((ratings: PlayerRating[]) => {
       const metrics = Object.keys(ratings[0]?.metrics || {});
       this.radarChartLabels = metrics;
+
       const data = ratings.map(rating => {
         return this.radarChartLabels.map(label => rating.metrics[label]);
       });
