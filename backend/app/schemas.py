@@ -1,7 +1,8 @@
 from pydantic import BaseModel
-from datetime import datetime
 from typing import Optional, List, Dict
+from datetime import datetime
 
+# User Schemas
 class UserBase(BaseModel):
     username: str
 
@@ -15,6 +16,7 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+# Club Schemas
 class ClubBase(BaseModel):
     name: str
 
@@ -27,6 +29,7 @@ class Club(ClubBase):
     class Config:
         orm_mode = True
 
+# Team Schemas
 class TeamBase(BaseModel):
     name: str
 
@@ -41,11 +44,12 @@ class Team(TeamBase):
     class Config:
         orm_mode = True
 
+# Player Schemas
 class PlayerBase(BaseModel):
     name: str
 
 class PlayerCreate(PlayerBase):
-    primary_team_id: int
+    pass
 
 class Player(PlayerBase):
     id: int
@@ -53,21 +57,23 @@ class Player(PlayerBase):
     class Config:
         orm_mode = True
 
-class LeagueBase(BaseModel):
-    name: str
+class PlayerTeamBase(BaseModel):
+    player_id: int
+    team_id: int
+    role: str
 
-class LeagueCreate(LeagueBase):
-    admin_id: int
-
-class League(LeagueBase):
+class PlayerTeam(PlayerTeamBase):
     id: int
 
     class Config:
         orm_mode = True
 
+# Tournament Schemas
 class TournamentBase(BaseModel):
     name: str
     type: str
+    group_stage: bool
+    knockout_stage: bool
 
 class TournamentCreate(TournamentBase):
     admin_id: int
@@ -78,61 +84,17 @@ class Tournament(TournamentBase):
     class Config:
         orm_mode = True
 
-class MatchBase(BaseModel):
-    team1_id: int
-    team2_id: int
-    date: datetime
-    result: Optional[str] = None
-
-class MatchCreate(MatchBase):
-    pass
-
-class Match(MatchBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-class MatchFactBase(BaseModel):
-    player_id: int
-    kilometers_run: float
-    sprints: int
-    intensive_runs: int
-    distance_run: float
-    match_date: datetime
-
-class MatchFactCreate(MatchFactBase):
-    pass
-
-class MatchFact(MatchFactBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
+# Player Rating Schemas
 class PlayerRatingBase(BaseModel):
     player_id: int
     coach_id: int
-    metrics: Dict[str, int]
+    metrics: Dict[str, int]  # Dynamic metrics stored as a dictionary
     rating_date: datetime
 
 class PlayerRatingCreate(PlayerRatingBase):
     pass
 
 class PlayerRating(PlayerRatingBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-class DynamicMetricBase(BaseModel):
-    name: str
-    description: str
-
-class DynamicMetricCreate(DynamicMetricBase):
-    pass
-
-class DynamicMetric(DynamicMetricBase):
     id: int
 
     class Config:
