@@ -14,16 +14,7 @@ export class PlayerRatingChartComponent implements OnInit {
     responsive: true,
   };
 
-  radarChartLabels: string[] = [
-    'Ball Manipulation',
-    'Kicking Ability',
-    'Passing Ability',
-    'Duel Tackling',
-    'Field Coverage',
-    'Blocking Ability',
-    'Game Strategy',
-    'Playmaking Risk'
-  ];
+  radarChartLabels: string[] = [];
 
   radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
@@ -38,6 +29,8 @@ export class PlayerRatingChartComponent implements OnInit {
 
   loadPlayerRatings() {
     this.playerRatingService.getPlayerRatings(this.playerId).subscribe((ratings: PlayerRating[]) => {
+      const metrics = Object.keys(ratings[0]?.metrics || {});
+      this.radarChartLabels = metrics;
       const data = ratings.map(rating => {
         return this.radarChartLabels.map(label => rating.metrics[label]);
       });
