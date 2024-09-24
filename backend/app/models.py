@@ -42,6 +42,18 @@ class Player(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     player_teams = relationship("PlayerTeam", back_populates="player")
+    transfers = relationship("Transfer", back_populates="player")
+
+class Transfer(Base):
+    __tablename__ = 'transfers'
+    id = Column(Integer, primary_key=True, index=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    from_team_id = Column(Integer, ForeignKey('teams.id'))
+    to_team_id = Column(Integer, ForeignKey('teams.id'))
+    transfer_date = Column(DateTime)
+    player = relationship("Player", back_populates="transfers")
+    from_team = relationship("Team", foreign_keys=[from_team_id])
+    to_team = relationship("Team", foreign_keys=[to_team_id])
 
 class League(Base):
     __tablename__ = 'leagues'
@@ -69,6 +81,10 @@ class Match(Base):
     team2_id = Column(Integer, ForeignKey('teams.id'))
     date = Column(DateTime)
     result = Column(String)
+    goals_team1 = Column(Integer, default=0)
+    goals_team2 = Column(Integer, default=0)
+    extra_time = Column(Boolean, default=False)
+    penalty_shootout = Column(Boolean, default=False)
     team1 = relationship("Team", foreign_keys=[team1_id])
     team2 = relationship("Team", foreign_keys=[team2_id])
 
