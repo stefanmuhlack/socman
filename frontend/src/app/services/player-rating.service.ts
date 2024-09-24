@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PlayerRating } from './player-rating.model';
+import { PlayerRating } from '../models/player-rating.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { PlayerRating } from './player-rating.model';
 export class PlayerRatingService {
   private apiUrl = 'http://localhost:8000/player-ratings/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createPlayerRating(playerRating: PlayerRating): Observable<PlayerRating> {
     return this.http.post<PlayerRating>(this.apiUrl, playerRating);
