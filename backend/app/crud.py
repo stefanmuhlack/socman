@@ -25,23 +25,6 @@ def create_club(db: Session, club: schemas.ClubCreate):
 def get_clubs(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Club).offset(skip).limit(limit).all()
 
-def get_club(db: Session, club_id: int):
-    return db.query(models.Club).filter(models.Club.id == club_id).first()
-
-# Team CRUD operations
-def create_team(db: Session, team: schemas.TeamCreate):
-    db_team = models.Team(name=team.name, club_id=team.club_id, league_id=team.league_id, tournament_id=team.tournament_id)
-    db.add(db_team)
-    db.commit()
-    db.refresh(db_team)
-    return db_team
-
-def get_teams(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(models.Team).offset(skip).limit(limit).all()
-
-def get_team(db: Session, team_id: int):
-    return db.query(models.Team).filter(models.Team.id == team_id).first()
-
 # Player CRUD operations
 def create_player(db: Session, player: schemas.PlayerCreate):
     db_player = models.Player(name=player.name)
@@ -50,25 +33,19 @@ def create_player(db: Session, player: schemas.PlayerCreate):
     db.refresh(db_player)
     return db_player
 
-def get_players(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(models.Player).offset(skip).limit(limit).all()
-
-def get_player(db: Session, player_id: int):
-    return db.query(models.Player).filter(models.Player.id == player_id).first()
-
-def add_player_to_team(db: Session, player_id: int, team_id: int, role: str):
-    db_player_team = models.PlayerTeam(player_id=player_id, team_id=team_id, role=role)
-    db.add(db_player_team)
+def transfer_player(db: Session, transfer: schemas.TransferCreate):
+    db_transfer = models.Transfer(player_id=transfer.player_id, from_team_id=transfer.from_team_id,
+                                  to_team_id=transfer.to_team_id, transfer_date=transfer.transfer_date)
+    db.add(db_transfer)
     db.commit()
-    db.refresh(db_player_team)
-    return db_player_team
-
-def get_player_teams(db: Session, player_id: int):
-    return db.query(models.PlayerTeam).filter(models.PlayerTeam.player_id == player_id).all()
+    db.refresh(db_transfer)
+    return db_transfer
 
 # Tournament CRUD operations
 def create_tournament(db: Session, tournament: schemas.TournamentCreate):
-    db_tournament = models.Tournament(name=tournament.name, type=tournament.type, group_stage=tournament.group_stage, knockout_stage=tournament.knockout_stage, admin_id=tournament.admin_id)
+    db_tournament = models.Tournament(name=tournament.name, type=tournament.type,
+                                      group_stage=tournament.group_stage, knockout_stage=tournament.knockout_stage,
+                                      admin_id=tournament.admin_id)
     db.add(db_tournament)
     db.commit()
     db.refresh(db_tournament)
@@ -77,16 +54,24 @@ def create_tournament(db: Session, tournament: schemas.TournamentCreate):
 def get_tournaments(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Tournament).offset(skip).limit(limit).all()
 
-def get_tournament(db: Session, tournament_id: int):
-    return db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
-
-# Player Rating CRUD operations
-def rate_player(db: Session, rating: schemas.PlayerRatingCreate):
-    db_rating = models.PlayerRating(player_id=rating.player_id, coach_id=rating.coach_id, metrics=rating.metrics, rating_date=rating.rating_date)
-    db.add(db_rating)
+# Match CRUD operations
+def create_match(db: Session, match: schemas.MatchCreate):
+    db_match = models.Match(team1_id=match.team1_id, team2_id=match.team2_id, date=match.date,
+                            result=match.result, goals_team1=match.goals_team1, goals_team2=match.goals_team2,
+                            extra_time=match.extra_time, penalty_shootout=match.penalty_shootout)
+    db.add(db_match)
     db.commit()
-    db.refresh(db_rating)
-    return db_rating
+    db.refresh(db_match)
+    return db_match
 
-def get_player_ratings(db: Session, player_id: int):
-    return db.query(models.PlayerRating).filter(models.PlayerRating.player_id == player_id).all()
+def update_match_result(db: Session, match_id: int, result: schemas.MatchResultUpdate):
+    db_match = db.query(models.Match).filter(models.Match.id == match_id).first()
+    if db_match:
+        db_match.result = result.result
+        db_match.goals_team1 = result.goals_team1
+        db_match.goals_team2 = result.goals_team2
+        db_match.extra_time = result.extra_time
+        db_match.penalty_shootout = result.penalty_shootout
+        db.commit()
+        db.refresh(db_match)
+    return db_match
