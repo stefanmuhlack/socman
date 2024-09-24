@@ -11,7 +11,7 @@ export class CreatePlayerRatingComponent {
   playerRating: PlayerRating = {
     player_id: 0,
     coach_id: 0,
-    metrics: {},
+    metrics: {},  // Metrics will be stored dynamically
     rating_date: new Date()
   };
 
@@ -28,22 +28,24 @@ export class CreatePlayerRatingComponent {
     this.dynamicMetricService.getDynamicMetrics().subscribe((metrics) => {
       this.availableMetrics = metrics.map((metric) => ({
         name: metric.name,
-        value: 0
+        value: 0  // Default value for the rating
       }));
     });
   }
 
   createPlayerRating() {
+    // Convert metrics array into a dictionary
     this.playerRating.metrics = this.availableMetrics.reduce((acc, metric) => {
       acc[metric.name] = metric.value;
       return acc;
     }, {});
+
     this.playerRatingService.createPlayerRating(this.playerRating).subscribe(
       () => {
-        // Handle success
+        // Success handling (e.g., redirect, display success message)
       },
       error => {
-        // Handle error
+        // Error handling
       }
     );
   }
