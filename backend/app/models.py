@@ -42,7 +42,6 @@ class Player(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     player_teams = relationship("PlayerTeam", back_populates="player")
-    transfers = relationship("Transfer", back_populates="player")
 
 class Transfer(Base):
     __tablename__ = 'transfers'
