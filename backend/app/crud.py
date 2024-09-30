@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
+from fastapi import HTTPException
 from .auth import get_password_hash
 
 # Custom Metric
@@ -9,6 +10,16 @@ def create_custom_metric(db: Session, metric: schemas.CustomMetricCreate):
     db.commit()
     db.refresh(db_metric)
     return db_metric
+
+# Create Player
+def create_player(db: Session, player: schemas.PlayerCreate):
+    db_player = models.Player(name=player.name, date_of_birth=player.date_of_birth, 
+                              height=player.height, weight=player.weight, position=player.position)
+    db.add(db_player)
+    db.commit()
+    db.refresh(db_player)
+    return db_player
+
 
 # Player Export
 def get_all_players(db: Session):
@@ -45,7 +56,7 @@ def store_rating_history(db: Session, player_id: int, metrics: dict):
     db.commit()
     db.refresh(db_history)
     return db_history
-
+    
 # Matches
 def create_match(db: Session, match: schemas.MatchCreate):
     existing_match = db.query(models.Match).filter(
@@ -55,8 +66,8 @@ def create_match(db: Session, match: schemas.MatchCreate):
     ).first()
     
     if existing_match:
-        raise HTTPException(status_code=400, detail="Match already scheduled between these teams on this date")
-    
+        raise HTTPException(status_code=400, detail="Match already scheduled on this date")
+
     db_match = models.Match(
         team1_id=match.team1_id,
         team2_id=match.team2_id,
