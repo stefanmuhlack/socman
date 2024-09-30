@@ -25,3 +25,12 @@ def read_player_ratings(
     current_user: models.User = Depends(get_current_user)
 ):
     return crud.get_player_ratings(db=db, player_id=player_id)
+
+# Add a route for fetching player rating history
+@router.get("/players/{player_id}/ratings/history/", response_model=List[schemas.Rating])
+def get_player_rating_history(
+    player_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    return crud.get_player_rating_history(db=db, player_id=player_id)
