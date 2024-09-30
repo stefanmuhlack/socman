@@ -45,8 +45,11 @@ def create_self_assessment(db: Session, player_id: int, metrics: dict):
     db.refresh(db_assessment)
     return db_assessment
     
-def get_tournament_leaderboard(db: Session, tournament_id: int):
-    return db.query(models.TournamentLeaderboard).filter_by(tournament_id=tournament_id).all()
+def get_tournament_leaderboard(db: Session, tournament_id: int, page: int, page_size: int):
+    offset = (page - 1) * page_size
+    leaderboard = db.query(models.Team).filter_by(tournament_id=tournament_id).order_by(models.Team.points.desc()).offset(offset).limit(page_size).all()
+    return leaderboard
+
 
 
 # Store a rating history entry whenever a new player rating is submitted
