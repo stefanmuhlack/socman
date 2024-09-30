@@ -52,6 +52,14 @@ class Player(Base):
     name = Column(String, index=True)
     player_teams = relationship("PlayerTeam", back_populates="player")
 
+class PlayerSelfAssessment(Base):
+    __tablename__ = 'player_self_assessments'
+    id = Column(Integer, primary_key=True, index=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    metrics = Column(JSON)  # Player's self-assessment metrics
+    assessment_date = Column(DateTime, default=datetime.utcnow)
+
+
 class Transfer(Base):
     __tablename__ = 'transfers'
     id = Column(Integer, primary_key=True, index=True)
