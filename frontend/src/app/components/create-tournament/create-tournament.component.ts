@@ -21,6 +21,12 @@ export class CreateTournamentComponent {
   substitution_limit: 3  // Default value
 };
 
+  if (!this.tournament.name || this.tournament.teams_number <= 0) {
+  this.errorMessage = 'Tournament name and team number must be valid.';
+  return;
+}
+
+  
   constructor(private tournamentService: TournamentService) {}
 
   createTournament() {
