@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PlayerRating } from '../models/player-rating.model';
+import { PlayerRatingHistory } from '../models/player-rating-history.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlayerRatingService {
-  private apiUrl = 'http://localhost:8000/player-ratings/';
+  private apiUrl = 'http://localhost:8000/players/';
 
   constructor(private http: HttpClient) {}
 
-  createPlayerRating(playerRating: PlayerRating): Observable<PlayerRating> {
-    return this.http.post<PlayerRating>(this.apiUrl, playerRating);
-  }
-
-  getPlayerRatings(playerId: number): Observable<PlayerRating[]> {
-    return this.http.get<PlayerRating[]>(`${this.apiUrl}${playerId}`);
+  getRatingHistory(playerId: number): Observable<PlayerRatingHistory[]> {
+    return this.http.get<PlayerRatingHistory[]>(`${this.apiUrl}${playerId}/ratings/history/`);
   }
 }
