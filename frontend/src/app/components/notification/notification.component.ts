@@ -6,17 +6,13 @@ import { NotificationService } from '../../services/notification.service';
   templateUrl: './notification.component.html',
 })
 export class NotificationComponent implements OnInit {
-  notifications: any[] = [];
+  notifications: string[] = [];
 
   constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.loadNotifications();
-  }
-
-  loadNotifications(): void {
-    this.notificationService.getNotifications().subscribe((data) => {
-      this.notifications = data;
+    this.notificationService.onMessage((message: string) => {
+      this.notifications.push(message);
     });
   }
 }
