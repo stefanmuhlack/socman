@@ -10,6 +10,10 @@ def create_custom_metric(db: Session, metric: schemas.CustomMetricCreate):
     db.refresh(db_metric)
     return db_metric
 
+# Player Export
+def get_all_players(db: Session):
+    return db.query(models.Player).all()
+
 # Player Transfers
 def transfer_player(db: Session, transfer: schemas.TransferCreate):
     db_transfer = models.Transfer(player_id=transfer.player_id, from_team_id=transfer.from_team_id,
