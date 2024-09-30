@@ -14,6 +14,11 @@ export class TournamentService {
     return this.http.post(this.apiUrl, tournament);
   }
 
+ getLeaderboard(tournamentId: number): Observable<any> {
+   return this.http.get(`${this.apiUrl}${tournamentId}/leaderboard`);
+ }
+
+  
   applyPromotionRelegation(tournamentId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/promotion-relegation/`, { tournament_id: tournamentId });
   }
