@@ -48,11 +48,20 @@ def store_rating_history(db: Session, player_id: int, metrics: dict):
 
 # Matches
 def create_match(db: Session, match: schemas.MatchCreate):
+    existing_match = db.query(models.Match).filter(
+        models.Match.team1_id == match.team1_id,
+        models.Match.team2_id == match.team2_id,
+        models.Match.date == match.date
+    ).first()
+    
+    if existing_match:
+        raise HTTPException(status_code=400, detail="Match already scheduled between these teams on this date")
+    
     db_match = models.Match(
         team1_id=match.team1_id,
         team2_id=match.team2_id,
         date=match.date,
-        home_away=match.home_away,  # "home" or "away"
+        home_away=match.home_away,
         extra_time=match.extra_time,
         penalty_shootout=match.penalty_shootout,
     )
