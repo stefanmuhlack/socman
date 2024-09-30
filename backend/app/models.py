@@ -90,6 +90,18 @@ class Tournament(Base):
     admin = relationship("User", back_populates="tournaments")
     teams = relationship("Team", back_populates="tournament")
 
+class TournamentLeaderboard(Base):
+    __tablename__ = 'tournament_leaderboards'
+    id = Column(Integer, primary_key=True, index=True)
+    tournament_id = Column(Integer, ForeignKey('tournaments.id'))
+    team_id = Column(Integer, ForeignKey('teams.id'))
+    points = Column(Integer, default=0)
+    matches_played = Column(Integer, default=0)
+    wins = Column(Integer, default=0)
+    losses = Column(Integer, default=0)
+    draws = Column(Integer, default=0)
+
+
 class Match(Base):
     __tablename__ = 'matches'
     id = Column(Integer, primary_key=True, index=True)
