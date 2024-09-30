@@ -103,6 +103,13 @@ class PlayerRating(Base):
     metrics = Column(JSON)  # Store metrics as JSON
     rating_date = Column(DateTime)
 
+class PlayerRatingHistory(Base):
+    __tablename__ = 'player_rating_history'
+    id = Column(Integer, primary_key=True, index=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    metrics = Column(JSON)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
 class DynamicMetric(Base):
     __tablename__ = 'dynamic_metrics'
     id = Column(Integer, primary_key=True, index=True)
