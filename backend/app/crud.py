@@ -19,9 +19,17 @@ def transfer_player(db: Session, transfer: schemas.TransferCreate):
     db.refresh(db_transfer)
     return db_transfer
 
-# historical player ratings
+# Historical player ratings
 def get_player_rating_history(db: Session, player_id: int):
     return db.query(models.PlayerRatingHistory).filter(models.PlayerRatingHistory.player_id == player_id).all()
+
+# Store a rating history entry whenever a new player rating is submitted
+def store_rating_history(db: Session, player_id: int, metrics: dict):
+    db_history = models.PlayerRatingHistory(player_id=player_id, metrics=metrics)
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
 
 # Matches
 def create_match(db: Session, match: schemas.MatchCreate):
