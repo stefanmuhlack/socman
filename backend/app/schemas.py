@@ -102,5 +102,22 @@ class MatchCreate(MatchBase):
 class Match(MatchBase):
     id: int
 
+    class PlayerBase(BaseModel):
+    name: str
+    date_of_birth: datetime
+    height: Optional[float] = None
+    weight: Optional[float] = None
+    position: str  # Required field for player position
+
+class PlayerCreate(PlayerBase):
+    pass
+
+class Player(PlayerBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
     class Config:
         orm_mode = True
