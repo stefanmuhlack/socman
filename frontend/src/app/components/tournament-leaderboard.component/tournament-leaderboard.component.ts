@@ -24,6 +24,11 @@ export class TournamentLeaderboardComponent implements OnInit {
     });
   }
 
+getMaxPages(): number {
+  return Math.ceil(this.totalItems / this.pageSize);
+}
+
+  
   onPageChange(page: number): void {
     this.currentPage = page;
     this.loadLeaderboard(this.currentPage, this.pageSize);
