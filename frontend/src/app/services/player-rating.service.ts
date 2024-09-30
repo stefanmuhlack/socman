@@ -18,3 +18,7 @@ export class PlayerRatingService {
 exportPlayerData(): Observable<Blob> {
   return this.http.get('/api/player/export', { responseType: 'blob' });
 }
+
+exportPlayerData(): Observable<Blob> {
+  return this.http.get(`${this.apiUrl}/export`, { responseType: 'blob' });
+}
