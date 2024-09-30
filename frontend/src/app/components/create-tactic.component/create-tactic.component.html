@@ -1,3 +1,11 @@
+<div>
+  <h3>Formation: {{ tactics.formation }}</h3>
+  <div *ngFor="let position of tactics.positions">
+    <label>{{ position.position }}:</label>
+    <input type="text" [(ngModel)]="position.player_id" placeholder="Assign player ID">
+  </div>
+</div>
+
 <form (ngSubmit)="saveTactic()">
   <label for="formation">Formation:</label>
   <select [(ngModel)]="tactics.formation" name="formation">
