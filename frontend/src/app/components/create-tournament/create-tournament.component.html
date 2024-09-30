@@ -1,0 +1,30 @@
+<form (ngSubmit)="createTournament()">
+  <label for="name">Tournament Name:</label>
+  <input type="text" [(ngModel)]="tournament.name" name="name">
+
+  <label for="type">Type:</label>
+  <select [(ngModel)]="tournament.type" name="type">
+    <option value="liga">Liga</option>
+    <option value="knockout">Knockout</option>
+  </select>
+
+  <label for="teams_number">Number of Teams:</label>
+  <input type="number" [(ngModel)]="tournament.teams_number" name="teams_number">
+
+  <label for="home_away">Home and Away Matches:</label>
+  <input type="checkbox" [(ngModel)]="tournament.home_away" name="home_away">
+
+  <label for="best_teams_promoted">Best Teams Promoted:</label>
+  <input type="number" [(ngModel)]="tournament.best_teams_promoted" name="best_teams_promoted">
+
+  <label for="worst_teams_relegated">Worst Teams Relegated:</label>
+  <input type="number" [(ngModel)]="tournament.worst_teams_relegated" name="worst_teams_relegated">
+
+  <label for="third_place_playoff">Third Place Playoff:</label>
+  <input type="checkbox" [(ngModel)]="tournament.third_place_playoff" name="third_place_playoff">
+
+  <label for="penalty_shootout">Penalty Shootout:</label>
+  <input type="checkbox" [(ngModel)]="tournament.penalty_shootout" name="penalty_shootout">
+
+  <button type="submit">Create Tournament</button>
+</form>
