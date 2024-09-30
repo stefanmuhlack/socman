@@ -1,0 +1,26 @@
+/* dashboard.component.css */
+@media (max-width: 768px) {
+  /* For mobile screens */
+  h2 {
+    font-size: 1.2em;
+  }
+  
+  p {
+    font-size: 0.9em;
+  }
+
+  /* Add any additional mobile styling here */
+}
+
+@media (min-width: 769px) {
+  /* For tablet/desktop screens */
+  h2 {
+    font-size: 2em;
+  }
+  
+  p {
+    font-size: 1.1em;
+  }
+
+  /* Add any desktop styling here */
+}
