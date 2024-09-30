@@ -1,0 +1,25 @@
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .player-rating-form {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .metric-input {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .player-rating-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .metric-input {
+    width: 48%;
+  }
+}
