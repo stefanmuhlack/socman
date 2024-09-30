@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
 from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import datetime
@@ -50,7 +50,12 @@ class Player(Base):
     __tablename__ = 'players'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+    date_of_birth = Column(DateTime)  # Date of Birth
+    height = Column(Float)  # Height in cm
+    weight = Column(Float)  # Weight in kg
+    position = Column(String)  # Player position (e.g., Defender, Midfielder, Forward)
     player_teams = relationship("PlayerTeam", back_populates="player")
+    rating_history = relationship("PlayerRatingHistory", back_populates="player")
 
 class PlayerSelfAssessment(Base):
     __tablename__ = 'player_self_assessments'
