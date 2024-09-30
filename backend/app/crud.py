@@ -41,9 +41,14 @@ def store_rating_history(db: Session, player_id: int, metrics: dict):
 
 # Matches
 def create_match(db: Session, match: schemas.MatchCreate):
-    db_match = models.Match(team1_id=match.team1_id, team2_id=match.team2_id, date=match.date, 
-                            result=match.result, goals_team1=match.goals_team1, goals_team2=match.goals_team2,
-                            extra_time=match.extra_time, penalty_shootout=match.penalty_shootout)
+    db_match = models.Match(
+        team1_id=match.team1_id,
+        team2_id=match.team2_id,
+        date=match.date,
+        home_away=match.home_away,  # "home" or "away"
+        extra_time=match.extra_time,
+        penalty_shootout=match.penalty_shootout,
+    )
     db.add(db_match)
     db.commit()
     db.refresh(db_match)
@@ -93,3 +98,46 @@ def update_leaderboard(db: Session, tournament_id: int, team_id: int, result: st
     db.refresh(leaderboard)
     return leaderboard
 
+def create_tournament(db: Session, tournament: schemas.TournamentCreate):
+    db_tournament = models.Tournament(
+        name=tournament.name,
+        type=tournament.type,
+        teams_number=tournament.teams_number,
+        home_away=tournament.home_away,
+        best_teams_promoted=tournament.best_teams_promoted,
+        worst_teams_relegated=tournament.worst_teams_relegated,
+        third_place_playoff=tournament.third_place_playoff,
+        penalty_shootout=tournament.penalty_shootout,
+        promotion_to=tournament.promotion_to,
+        relegation_to=tournament.relegation_to,
+    )
+    db.add(db_tournament)
+    db.commit()
+    db.refresh(db_tournament)
+    return db_tournament
+
+
+def handle_promotion_relegation(db: Session, tournament: models.Tournament):
+    teams = sorted(tournament.teams, key=lambda t: t.points, reverse=True)
+    
+    # Promote the best teams
+    if tournament.promotion_to:
+        for i in range(tournament.best_teams_promoted):
+            promote_team(db, teams[i], tournament.promotion_to)
+    
+    # Relegate the worst teams
+    if tournament.relegation_to:
+        for i in range(tournament.worst_teams_relegated):
+            relegate_team(db, teams[-(i+1)], tournament.relegation_to)
+    
+    # Handle third-place playoff
+    if tournament.third_place_playoff:
+        handle_third_place_playoff(db, teams)
+
+def promote_team(db: Session, team: models.Team, promotion_tournament: models.Tournament):
+    team.tournament_id = promotion_tournament.id
+    db.commit()
+
+def relegate_team(db: Session, team: models.Team, relegation_tournament: models.Tournament):
+    team.tournament_id = relegation_tournament.id
+    db.commit()
