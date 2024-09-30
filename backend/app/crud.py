@@ -2,8 +2,6 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .auth import get_password_hash
 
-# CRUD operations for users, clubs, teams, players, transfers, tournaments, matches, player ratings, dynamic metrics.
-
 # Player Transfers
 def transfer_player(db: Session, transfer: schemas.TransferCreate):
     db_transfer = models.Transfer(player_id=transfer.player_id, from_team_id=transfer.from_team_id,
