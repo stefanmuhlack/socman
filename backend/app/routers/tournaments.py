@@ -1,9 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from .. import crud, models, schemas
 from ..database import get_db
 
 router = APIRouter()
+
+# Get tournament leaderboard with pagination
+@router.get("/tournaments/{tournament_id}/leaderboard", response_model=List[schemas.TournamentLeaderboard])
+def get_leaderboard(tournament_id: int, page: int = Query(1, ge=1), page_size: int = Query(10, le=50), db: Session = Depends(get_db)):
+    return crud.get_tournament_leaderboard(db=db, tournament_id=tournament_id, page=page, page_size=page_size)
 
 # Create a new tournament
 @router.post("/tournaments/", response_model=schemas.Tournament)
