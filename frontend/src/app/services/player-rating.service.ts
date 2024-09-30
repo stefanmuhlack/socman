@@ -15,3 +15,6 @@ export class PlayerRatingService {
     return this.http.get<PlayerRatingHistory[]>(`${this.apiUrl}${playerId}/ratings/history/`);
   }
 }
+exportPlayerData(): Observable<Blob> {
+  return this.http.get('/api/player/export', { responseType: 'blob' });
+}
