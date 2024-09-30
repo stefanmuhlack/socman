@@ -7,16 +7,25 @@ import { TournamentService } from '../../services/tournament.service';
 })
 export class TournamentLeaderboardComponent implements OnInit {
   leaderboard: any[] = [];
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 0;
 
   constructor(private tournamentService: TournamentService) {}
 
-  ngOnInit(): void {
-    this.loadLeaderboard();
+  ngOnInit() {
+    this.loadLeaderboard(this.currentPage, this.pageSize);
   }
 
-  loadLeaderboard(tournamentId: number): void {
-  this.tournamentService.getLeaderboard(tournamentId).subscribe((data) => {
-    this.leaderboard = data;
-  });
-}
+  loadLeaderboard(page: number, pageSize: number): void {
+    this.tournamentService.getLeaderboard(this.tournamentId, page, pageSize).subscribe((data) => {
+      this.leaderboard = data.items;  // assuming the backend returns an object with items and totalItems
+      this.totalItems = data.totalItems;
+    });
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.loadLeaderboard(this.currentPage, this.pageSize);
+  }
 }
