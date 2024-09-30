@@ -14,9 +14,9 @@ export class TournamentLeaderboardComponent implements OnInit {
     this.loadLeaderboard();
   }
 
-  loadLeaderboard(): void {
-    this.tournamentService.getLeaderboard().subscribe((data) => {
-      this.leaderboard = data;
-    });
-  }
+  loadLeaderboard(tournamentId: number): void {
+  this.tournamentService.getLeaderboard(tournamentId).subscribe((data) => {
+    this.leaderboard = data;
+  });
+}
 }
