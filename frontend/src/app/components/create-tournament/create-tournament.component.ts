@@ -7,24 +7,24 @@ import { Tournament } from '../../models/tournament.model';
   templateUrl: './create-tournament.component.html',
 })
 export class CreateTournamentComponent {
-  tournament: Tournament = {
+  tournament = {
     name: '',
-    type: 'knockout',  // Default tournament type
-    group_stage: false,
-    knockout_stage: true,
-    admin_id: 0  // Admin ID will be set dynamically
+    type: 'liga',  // Default to 'liga' type
+    teams_number: 18,  // Example default
+    home_away: false,
+    best_teams_promoted: 2,
+    worst_teams_relegated: 2,
+    third_place_playoff: false,
+    penalty_shootout: false,
+    promotion_to: null,
+    relegation_to: null
   };
 
   constructor(private tournamentService: TournamentService) {}
 
   createTournament() {
-    this.tournamentService.createTournament(this.tournament).subscribe(
-      () => {
-        // Success handling
-      },
-      error => {
-        // Error handling
-      }
-    );
+    this.tournamentService.createTournament(this.tournament).subscribe(() => {
+      // Success handling
+    });
   }
 }
