@@ -73,8 +73,10 @@ class Transfer(TransferBase):
 class TournamentBase(BaseModel):
     name: str
     type: str
-    group_stage: bool
-    knockout_stage: bool
+    teams_number: int
+    max_starting_players: int = 11
+    max_substitutes: int = 5
+    substitution_limit: int = 3
 
 class TournamentCreate(TournamentBase):
     admin_id: int
