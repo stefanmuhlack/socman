@@ -1,0 +1,23 @@
+<div *ngIf="userRole === 'super-admin'">
+  <h2>Super Admin Dashboard</h2>
+  <p>Manage users, admins, and system-wide settings.</p>
+  <!-- Super-admin specific UI components -->
+</div>
+
+<div *ngIf="userRole === 'admin'">
+  <h2>Admin Dashboard</h2>
+  <p>Manage leagues, tournaments, clubs, and teams.</p>
+  <!-- Admin-specific UI components -->
+</div>
+
+<div *ngIf="userRole === 'coach'">
+  <h2>Coach Dashboard</h2>
+  <p>Manage your teams and player ratings.</p>
+  <!-- Coach-specific UI components -->
+</div>
+
+<div *ngIf="userRole === 'player'">
+  <h2>Player Dashboard</h2>
+  <p>View your ratings, teams, and performance history.</p>
+  <!-- Player-specific UI components -->
+</div>
