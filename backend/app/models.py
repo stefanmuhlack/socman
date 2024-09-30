@@ -95,9 +95,9 @@ class Tournament(Base):
     worst_teams_relegated = Column(Integer, default=2)  # Number of teams relegated
     third_place_playoff = Column(Boolean, default=False)  # If true, playoff for third place
     penalty_shootout = Column(Boolean, default=False)  # Enable penalty shootouts if necessary
-    promotion_to = Column(Integer, ForeignKey('tournaments.id'))  # Link to upper league
-    relegation_to = Column(Integer, ForeignKey('tournaments.id'))  # Link to lower league
-    teams = relationship("Team", back_populates="tournament")
+    max_starting_players = Column(Integer, default=11)  # Max players to start a match
+    max_substitutes = Column(Integer, default=5)  # Max substitutes allowed in a match
+    substitution_limit = Column(Integer, default=3)  # Number of substitution windows
 
 
 class TournamentLeaderboard(Base):
