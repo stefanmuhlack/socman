@@ -18,6 +18,12 @@ export class CreateTacticComponent {
 
   constructor(private tacticalService: TacticalService) {}
 
+if (!this.tactics.positions.every(pos => pos.player_id)) {
+  alert('Please assign all players to valid positions.');
+  return;
+}
+
+  
   saveTactic() {
     this.tacticalService.saveTactic(this.tactics).subscribe(() => {
       // Success handling
