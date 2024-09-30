@@ -7,6 +7,11 @@ const routes: Routes = [
   // other routes
 ];
 
+const routes: Routes = [
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'player-rating', loadChildren: () => import('./player-rating/player-rating.module').then(m => m.PlayerRatingModule) },
+];
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
