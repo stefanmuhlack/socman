@@ -1,3 +1,45 @@
 canvas {
   max-width: 100%;
 }
+
+/* For mobile devices */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table th, table td {
+    padding: 8px;
+    text-align: left;
+    display: block;
+    width: 100%;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tbody tr {
+    margin-bottom: 15px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+}
+
+/* For tablets and above */
+@media (min-width: 769px) {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table th, table td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  table tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+}
