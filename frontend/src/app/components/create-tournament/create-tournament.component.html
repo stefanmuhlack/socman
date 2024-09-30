@@ -1,4 +1,10 @@
 <form (ngSubmit)="createTournament()">
+ <div class="form-group">
+  <label for="name">Tournament Name:</label>
+  <input type="text" [(ngModel)]="tournament.name" name="name" class="form-control">
+</div>
+
+  
   <label for="name">Tournament Name:</label>
   <input type="text" [(ngModel)]="tournament.name" name="name">
 
