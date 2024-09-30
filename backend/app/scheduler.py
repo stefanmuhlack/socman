@@ -4,10 +4,10 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 
 # Generate a round-robin schedule for all teams
-def generate_round_robin_schedule(teams: List[models.Team], start_date: datetime) -> List[models.Match]:
+def generate_round_robin_schedule(teams, start_date: datetime):
     schedule = []
-    if len(teams) % 2 != 0:  # Add a dummy team if odd number of teams
-        teams.append(None)
+    if len(teams) % 2 != 0:
+        teams.append(None)  # Add a dummy team if odd number of teams
     
     total_rounds = len(teams) - 1
     half_size = len(teams) // 2
@@ -18,13 +18,19 @@ def generate_round_robin_schedule(teams: List[models.Team], start_date: datetime
             team2 = teams[len(teams) - i - 1]
             if team1 and team2:
                 match_date = start_date + timedelta(days=round_num * 7)
-                schedule.append((team1, team2, match_date))  # Home game for team1
-                schedule.append((team2, team1, match_date + timedelta(days=3)))  # Home game for team2
+                if not _is_conflict(schedule, team1, team2, match_date):
+                    schedule.append((team1, team2, match_date))
+                    schedule.append((team2, team1, match_date + timedelta(days=3)))
         
-        # Rotate the teams for the next round
-        teams.insert(1, teams.pop())
-    
+        teams.insert(1, teams.pop())  # Rotate teams for next round
     return schedule
+
+def _is_conflict(schedule, team1, team2, match_date):
+    for match in schedule:
+        if match[0] == team1 or match[1] == team2 or match[0] == team2 or match[1] == team1:
+            if match[2] == match_date:
+                return True
+    return False
 
 # Generate knockout matches based on the teams
 def generate_knockout_schedule(teams: List[models.Team], start_date: datetime) -> List[models.Match]:
