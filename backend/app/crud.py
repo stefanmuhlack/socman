@@ -29,6 +29,9 @@ def create_self_assessment(db: Session, player_id: int, metrics: dict):
     db.commit()
     db.refresh(db_assessment)
     return db_assessment
+    
+def get_tournament_leaderboard(db: Session, tournament_id: int):
+    return db.query(models.TournamentLeaderboard).filter_by(tournament_id=tournament_id).all()
 
 
 # Store a rating history entry whenever a new player rating is submitted
