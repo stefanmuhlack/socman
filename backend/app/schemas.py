@@ -41,6 +41,18 @@ class PlayerTeam(PlayerTeamBase):
     class Config:
         orm_mode = True
 
+class PlayerRatingHistoryBase(BaseModel):
+    player_id: int
+    metrics: Dict[str, int]
+    timestamp: datetime
+
+class PlayerRatingHistory(PlayerRatingHistoryBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 # Transfer Schemas
 class TransferBase(BaseModel):
     player_id: int
