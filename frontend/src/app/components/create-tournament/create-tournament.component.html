@@ -26,5 +26,15 @@
   <label for="penalty_shootout">Penalty Shootout:</label>
   <input type="checkbox" [(ngModel)]="tournament.penalty_shootout" name="penalty_shootout">
 
+  <label for="max_starting_players">Max Starting Players:</label>
+<input type="number" [(ngModel)]="tournament.max_starting_players" name="max_starting_players">
+
+<label for="max_substitutes">Max Substitutes:</label>
+<input type="number" [(ngModel)]="tournament.max_substitutes" name="max_substitutes">
+
+<label for="substitution_limit">Substitution Limit:</label>
+<input type="number" [(ngModel)]="tournament.substitution_limit" name="substitution_limit">
+
+
   <button type="submit">Create Tournament</button>
 </form>
