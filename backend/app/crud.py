@@ -2,6 +2,14 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .auth import get_password_hash
 
+# Custom Metric
+def create_custom_metric(db: Session, metric: schemas.CustomMetricCreate):
+    db_metric = models.CustomMetric(name=metric.name, description=metric.description, coach_id=metric.coach_id)
+    db.add(db_metric)
+    db.commit()
+    db.refresh(db_metric)
+    return db_metric
+
 # Player Transfers
 def transfer_player(db: Session, transfer: schemas.TransferCreate):
     db_transfer = models.Transfer(player_id=transfer.player_id, from_team_id=transfer.from_team_id,
