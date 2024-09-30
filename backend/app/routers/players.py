@@ -19,3 +19,14 @@ def get_players(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 @router.post("/players/transfer/", response_model=schemas.Transfer)
 def transfer_player(transfer: schemas.TransferCreate, db: Session = Depends(get_db)):
     return crud.transfer_player(db=db, transfer=transfer)
+
+# Data Export API
+@router.get("/players/export", response_class=FileResponse)
+def export_player_data(db: Session = Depends(get_db)):
+    players = crud.get_all_players(db)
+    csv_data = "id,name,date_of_birth,height,weight,position\n"
+    for player in players:
+        csv_data += f"{player.id},{player.name},{player.date_of_birth},{player.height},{player.weight},{player.position}\n"
+    with open("players.csv", "w") as file:
+        file.write(csv_data)
+    return FileResponse("players.csv")
