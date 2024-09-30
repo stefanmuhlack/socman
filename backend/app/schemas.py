@@ -2,33 +2,6 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict
 from datetime import datetime
 
-# User Schemas
-class UserBase(BaseModel):
-    username: str
-
-class UserCreate(UserBase):
-    password: str
-
-class User(UserBase):
-    id: int
-    role: str
-
-    class Config:
-        orm_mode = True
-
-# Club Schemas
-class ClubBase(BaseModel):
-    name: str
-
-class ClubCreate(ClubBase):
-    admin_id: int
-
-class Club(ClubBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
 # Team Schemas
 class TeamBase(BaseModel):
     name: str
@@ -119,10 +92,3 @@ class Match(MatchBase):
 
     class Config:
         orm_mode = True
-
-class MatchResultUpdate(BaseModel):
-    result: str
-    goals_team1: int
-    goals_team2: int
-    extra_time: bool
-    penalty_shootout: bool
