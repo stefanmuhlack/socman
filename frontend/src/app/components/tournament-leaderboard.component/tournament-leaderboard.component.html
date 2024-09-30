@@ -1,3 +1,8 @@
+<label for="tournament">Choose Tournament:</label>
+<select (change)="loadLeaderboard($event.target.value)">
+  <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
+</select>
+
 <div>
   <h3>Tournament Leaderboard</h3>
   <table>
