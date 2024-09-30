@@ -24,8 +24,12 @@ export class CreateTournamentComponent {
   constructor(private tournamentService: TournamentService) {}
 
   createTournament() {
-    this.tournamentService.createTournament(this.tournament).subscribe(() => {
-      // Success handling
-    });
-  }
+  this.tournamentService.createTournament(this.tournament).subscribe({
+    next: () => {
+      // Success feedback
+    },
+    error: (err) => {
+      alert('Error creating tournament: ' + err.message);  // Simple error feedback
+    }
+  });
 }
