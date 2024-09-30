@@ -23,6 +23,14 @@ def transfer_player(db: Session, transfer: schemas.TransferCreate):
 def get_player_rating_history(db: Session, player_id: int):
     return db.query(models.PlayerRatingHistory).filter(models.PlayerRatingHistory.player_id == player_id).all()
 
+def create_self_assessment(db: Session, player_id: int, metrics: dict):
+    db_assessment = models.PlayerSelfAssessment(player_id=player_id, metrics=metrics)
+    db.add(db_assessment)
+    db.commit()
+    db.refresh(db_assessment)
+    return db_assessment
+
+
 # Store a rating history entry whenever a new player rating is submitted
 def store_rating_history(db: Session, player_id: int, metrics: dict):
     db_history = models.PlayerRatingHistory(player_id=player_id, metrics=metrics)
