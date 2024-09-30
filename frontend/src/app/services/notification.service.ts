@@ -3,14 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://localhost:8000/notifications/';
+  private ws: WebSocket;
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    this.ws = new WebSocket('ws://localhost:8000/ws/notifications');
+  }
 
-  getNotifications(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  onMessage(callback: (message: string) => void) {
+    this.ws.onmessage = (event) => {
+      callback(event.data);
+    };
+  }
+
+  sendMessage(message: string) {
+    this.ws.send(message);
   }
 }
