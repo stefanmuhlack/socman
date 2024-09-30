@@ -3,9 +3,8 @@
   <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
 </select>
 
-<div>
-  <h3>Tournament Leaderboard</h3>
-  <table>
+<div *ngIf="leaderboard.length > 0">
+  <table class="table">
     <thead>
       <tr>
         <th>Team</th>
@@ -27,4 +26,15 @@
       </tr>
     </tbody>
   </table>
+   <!-- Pagination Controls -->
+  <nav aria-label="Leaderboard Pagination">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === getMaxPages()">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>
