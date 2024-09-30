@@ -1,0 +1,25 @@
+<div>
+  <h3>Tournament Leaderboard</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>Matches Played</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Draws</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of leaderboard">
+        <td>{{ team.name }}</td>
+        <td>{{ team.matches_played }}</td>
+        <td>{{ team.wins }}</td>
+        <td>{{ team.losses }}</td>
+        <td>{{ team.draws }}</td>
+        <td>{{ team.points }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
