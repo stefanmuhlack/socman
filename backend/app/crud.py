@@ -19,6 +19,10 @@ def transfer_player(db: Session, transfer: schemas.TransferCreate):
     db.refresh(db_transfer)
     return db_transfer
 
+# historical player ratings
+def get_player_rating_history(db: Session, player_id: int):
+    return db.query(models.PlayerRatingHistory).filter(models.PlayerRatingHistory.player_id == player_id).all()
+
 # Matches
 def create_match(db: Session, match: schemas.MatchCreate):
     db_match = models.Match(team1_id=match.team1_id, team2_id=match.team2_id, date=match.date, 
