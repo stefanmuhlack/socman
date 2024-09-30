@@ -15,6 +15,10 @@ def create_tournament(tournament: schemas.TournamentCreate, db: Session = Depend
 def get_tournaments(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return crud.get_tournaments(db=db, skip=skip, limit=limit)
 
+@router.get("/tournaments/{tournament_id}/leaderboard", response_model=List[schemas.TournamentLeaderboard])
+def get_leaderboard(tournament_id: int, db: Session = Depends(get_db)):
+    return crud.get_tournament_leaderboard(db=db, tournament_id=tournament_id)
+
 @router.post("/tournaments/", response_model=schemas.Tournament)
 def create_tournament(tournament: schemas.TournamentCreate, db: Session = Depends(get_db)):
     return crud.create_tournament(db=db, tournament=tournament)
