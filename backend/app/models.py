@@ -104,6 +104,19 @@ class Match(Base):
     team1 = relationship("Team", foreign_keys=[team1_id])
     team2 = relationship("Team", foreign_keys=[team2_id])
 
+class MatchStatistics(Base):
+    __tablename__ = 'match_statistics'
+    id = Column(Integer, primary_key=True, index=True)
+    match_id = Column(Integer, ForeignKey('matches.id'))
+    player_id = Column(Integer, ForeignKey('players.id'))
+    goals = Column(Integer, default=0)
+    assists = Column(Integer, default=0)
+    tackles = Column(Integer, default=0)
+    passes_completed = Column(Integer, default=0)
+    fouls_committed = Column(Integer, default=0)
+    minutes_played = Column(Integer, default=0)
+    team_id = Column(Integer, ForeignKey('teams.id'))
+
 class PlayerRating(Base):
     __tablename__ = 'player_ratings'
     id = Column(Integer, primary_key=True, index=True)
