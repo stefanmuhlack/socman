@@ -9,6 +9,14 @@ class User(Base):
     hashed_password = Column(String)
     role = Column(String)  # Role-based access (super-admin, admin, coach, player)
 
+class CustomMetric(Base):
+    __tablename__ = 'custom_metrics'
+    id = Column(Integer, primary_key=True, index=True)
+    coach_id = Column(Integer, ForeignKey('users.id'))
+    name = Column(String, index=True)
+    description = Column(String)
+    coach = relationship("User", back_populates="custom_metrics")
+
 class Club(Base):
     __tablename__ = 'clubs'
     id = Column(Integer, primary_key=True, index=True)
