@@ -10,16 +10,7 @@ export class TournamentService {
 
   constructor(private http: HttpClient) {}
 
-  createTournament(tournament: any): Observable<any> {
-    return this.http.post(this.apiUrl, tournament);
-  }
-
- getLeaderboard(tournamentId: number): Observable<any> {
-   return this.http.get(`${this.apiUrl}${tournamentId}/leaderboard`);
- }
-
-  
-  applyPromotionRelegation(tournamentId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/promotion-relegation/`, { tournament_id: tournamentId });
+  getLeaderboard(tournamentId: number, page: number, pageSize: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}${tournamentId}/leaderboard?page=${page}&page_size=${pageSize}`);
   }
 }
