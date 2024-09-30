@@ -65,3 +65,31 @@ def create_match_statistics(db: Session, match_id: int, player_id: int, stats: d
     db.commit()
     db.refresh(db_stats)
     return db_stats
+
+# Tournament Leaderboard
+def update_leaderboard(db: Session, tournament_id: int, team_id: int, result: str):
+    leaderboard = db.query(models.TournamentLeaderboard).filter_by(
+        tournament_id=tournament_id, team_id=team_id
+    ).first()
+
+    if not leaderboard:
+        leaderboard = models.TournamentLeaderboard(
+            tournament_id=tournament_id,
+            team_id=team_id
+        )
+        db.add(leaderboard)
+
+    if result == "win":
+        leaderboard.wins += 1
+        leaderboard.points += 3
+    elif result == "loss":
+        leaderboard.losses += 1
+    elif result == "draw":
+        leaderboard.draws += 1
+        leaderboard.points += 1
+
+    leaderboard.matches_played += 1
+    db.commit()
+    db.refresh(leaderboard)
+    return leaderboard
+
