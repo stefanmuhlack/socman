@@ -48,3 +48,20 @@ def create_match(db: Session, match: schemas.MatchCreate):
     db.commit()
     db.refresh(db_match)
     return db_match
+
+def create_match_statistics(db: Session, match_id: int, player_id: int, stats: dict):
+    db_stats = models.MatchStatistics(
+        match_id=match_id,
+        player_id=player_id,
+        goals=stats.get('goals', 0),
+        assists=stats.get('assists', 0),
+        tackles=stats.get('tackles', 0),
+        passes_completed=stats.get('passes_completed', 0),
+        fouls_committed=stats.get('fouls_committed', 0),
+        minutes_played=stats.get('minutes_played', 0),
+        team_id=stats['team_id']
+    )
+    db.add(db_stats)
+    db.commit()
+    db.refresh(db_stats)
+    return db_stats
