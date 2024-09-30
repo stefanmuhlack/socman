@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float, JSON, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import relationship
 from .database import Base
 from datetime import datetime
@@ -83,12 +83,17 @@ class Tournament(Base):
     __tablename__ = 'tournaments'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    type = Column(String)  # Type like knockout, round-robin
-    group_stage = Column(Boolean, default=False)  # Whether group stage exists
-    knockout_stage = Column(Boolean, default=True)  # Knockout round exists
-    admin_id = Column(Integer, ForeignKey('users.id'))
-    admin = relationship("User", back_populates="tournaments")
+    type = Column(String)  # 'liga' or 'knockout'
+    teams_number = Column(Integer)  # Number of teams in the tournament
+    home_away = Column(Boolean, default=False)  # True for home/away matches
+    best_teams_promoted = Column(Integer, default=2)  # Number of teams promoted
+    worst_teams_relegated = Column(Integer, default=2)  # Number of teams relegated
+    third_place_playoff = Column(Boolean, default=False)  # If true, playoff for third place
+    penalty_shootout = Column(Boolean, default=False)  # Enable penalty shootouts if necessary
+    promotion_to = Column(Integer, ForeignKey('tournaments.id'))  # Link to upper league
+    relegation_to = Column(Integer, ForeignKey('tournaments.id'))  # Link to lower league
     teams = relationship("Team", back_populates="tournament")
+
 
 class TournamentLeaderboard(Base):
     __tablename__ = 'tournament_leaderboards'
@@ -108,14 +113,13 @@ class Match(Base):
     team1_id = Column(Integer, ForeignKey('teams.id'))
     team2_id = Column(Integer, ForeignKey('teams.id'))
     date = Column(DateTime)
-    result = Column(String)
     goals_team1 = Column(Integer, default=0)
     goals_team2 = Column(Integer, default=0)
-    extra_time = Column(Boolean, default=False)
-    penalty_shootout = Column(Boolean, default=False)
-    team1 = relationship("Team", foreign_keys=[team1_id])
-    team2 = relationship("Team", foreign_keys=[team2_id])
-
+    extra_time = Column(Boolean, default=False)  # Extra time played
+    penalty_shootout = Column(Boolean, default=False)  # Penalty shootout if true
+    home_away = Column(String)  # "home" or "away"
+    result = Column(String)  # Store result as "win", "draw", "loss"
+    
 class MatchStatistics(Base):
     __tablename__ = 'match_statistics'
     id = Column(Integer, primary_key=True, index=True)
