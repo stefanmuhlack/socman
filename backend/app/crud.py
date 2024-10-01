@@ -101,6 +101,55 @@ def create_match_statistics(db: Session, match_id: int, player_id: int, stats: d
     db.refresh(db_stats)
     return db_stats
 
+# Tactical Formations LineUps
+def create_tactical_formation(db: Session, formation: schemas.TacticalFormationCreate, user_id: int):
+    db_formation = models.TacticalFormation(name=formation.name, user_id=user_id)
+    db.add(db_formation)
+    db.commit()
+    db.refresh(db_formation)
+    
+    # Add players to the formation
+    for player in formation.players:
+        player_position = models.TacticalPlayerPosition(
+            player_id=player.player_id,
+            formation_id=db_formation.id,
+            position=player.position
+        )
+        db.add(player_position)
+    db.commit()
+    
+    return db_formation
+
+def get_formation_by_id(db: Session, formation_id: int):
+    return db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
+
+def get_all_formations(db: Session, user_id: int):
+    return db.query(models.TacticalFormation).filter(models.TacticalFormation.user_id == user_id).all()
+
+def update_tactical_formation(db: Session, formation_id: int, formation_update: schemas.TacticalFormationUpdate):
+    formation = db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
+    
+    if formation_update.name:
+        formation.name = formation_update.name
+    
+    if formation_update.players:
+        # Clear current players
+        db.query(models.TacticalPlayerPosition).filter_by(formation_id=formation_id).delete()
+        
+        # Re-add players
+        for player in formation_update.players:
+            player_position = models.TacticalPlayerPosition(
+                player_id=player.player_id,
+                formation_id=formation.id,
+                position=player.position
+            )
+            db.add(player_position)
+    db.commit()
+    return formation
+
+
+
+
 # Tournament Leaderboard
 def update_leaderboard(db: Session, tournament_id: int, team_id: int, result: str):
     leaderboard = db.query(models.TournamentLeaderboard).filter_by(
