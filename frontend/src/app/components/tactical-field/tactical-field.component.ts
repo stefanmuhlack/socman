@@ -8,8 +8,31 @@ export class TacticalFieldComponent {
   @Input() players: any[] = [];
   @Output() playerPositionChange = new EventEmitter<any>();
 
-  // Emit the change when a player's position is modified
-  onPlayerPositionChange(player: any, newPosition: string) {
-    this.playerPositionChange.emit({ player, newPosition });
+  draggedPlayer: any;
+
+  // Handle dragging the player
+  onDragStart(player: any) {
+    this.draggedPlayer = player;
+  }
+
+  // Allow the drop event
+  allowDrop(event: any) {
+    event.preventDefault();
+  }
+
+  // Handle dropping the player into a new position
+  onDrop(targetPlayer: any) {
+    const draggedPlayerPosition = this.draggedPlayer.position;
+    this.draggedPlayer.position = targetPlayer.position;
+    targetPlayer.position = draggedPlayerPosition;
+
+    // Emit the position change
+    this.playerPositionChange.emit({
+      player: this.draggedPlayer,
+      target: targetPlayer,
+    });
+
+    // Clear the dragged player
+    this.draggedPlayer = null;
   }
 }
