@@ -2,20 +2,43 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict
 from datetime import datetime
 
+# Formation Schemas
+class TacticalFormationBase(BaseModel):
+    name: str
+    comment_german: Optional[str] = None
+    comment_english: Optional[str] = None
+
+class TacticalFormationCreate(TacticalFormationBase):
+    pass
+
+class TacticalFormationUpdate(TacticalFormationBase):
+    pass
+
+class TacticalFormation(TacticalFormationBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 # Team Schemas
+
 class TeamBase(BaseModel):
     name: str
+    club_id: int
 
 class TeamCreate(TeamBase):
-    club_id: int
-    league_id: Optional[int] = None
-    tournament_id: Optional[int] = None
+    pass
+
+class TeamUpdate(TeamBase):
+    pass
 
 class Team(TeamBase):
     id: int
 
     class Config:
         orm_mode = True
+
 
 # Tactical Formations
 
@@ -46,8 +69,14 @@ class TacticalFormation(BaseModel):
 # Player Schemas
 class PlayerBase(BaseModel):
     name: str
+    age: int
+    position: str
+    team_id: int
 
 class PlayerCreate(PlayerBase):
+    pass
+
+class PlayerUpdate(PlayerBase):
     pass
 
 class Player(PlayerBase):
@@ -96,6 +125,24 @@ class Transfer(TransferBase):
         orm_mode = True
 
 # Tournament Schemas
+class TournamentBase(BaseModel):
+    name: str
+    league_id: int
+    start_date: str
+    end_date: str
+
+class TournamentCreate(TournamentBase):
+    pass
+
+class TournamentUpdate(TournamentBase):
+    pass
+
+class Tournament(TournamentBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
 class TournamentBase(BaseModel):
     name: str
     type: str
