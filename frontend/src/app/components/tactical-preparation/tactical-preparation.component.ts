@@ -45,16 +45,19 @@ export class TacticalPreparationComponent {
   }
 
   saveFormation() {
-    // Prepare data for saving the formation with new player positions
-    const formationData = {
-      formationName: this.selectedFormation,
-      players: this.players.map(p => ({ player_id: p.id, position: p.position })),
-    };
-    this.tacticalService.saveFormation(formationData).subscribe(response => {
-      alert('Formation saved successfully!');
-    });
-  }
+  const formationData = {
+    formationName: this.formation.name,
+    players: this.players.map(p => ({
+      player_id: p.id,
+      position: p.position
+    }))
+  };
+
+  this.tacticalService.saveFormation(formationData).subscribe(response => {
+    alert('Formation saved successfully!');
+  });
 }
+
 
 
 createFormation() {
