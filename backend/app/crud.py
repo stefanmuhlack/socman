@@ -12,13 +12,34 @@ def create_custom_metric(db: Session, metric: schemas.CustomMetricCreate):
     return db_metric
 
 # Create Player
+def get_players(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Player).offset(skip).limit(limit).all()
+
+def get_player(db: Session, player_id: int):
+    return db.query(models.Player).filter(models.Player.id == player_id).first()
+
 def create_player(db: Session, player: schemas.PlayerCreate):
-    db_player = models.Player(name=player.name, date_of_birth=player.date_of_birth, 
-                              height=player.height, weight=player.weight, position=player.position)
+    db_player = models.Player(**player.dict())
     db.add(db_player)
     db.commit()
     db.refresh(db_player)
     return db_player
+
+def update_player(db: Session, player_id: int, player: schemas.PlayerUpdate):
+    db_player = db.query(models.Player).filter(models.Player.id == player_id).first()
+    if not db_player:
+        return None
+    for var, value in vars(player).items():
+        setattr(db_player, var, value) if value else None
+    db.commit()
+    db.refresh(db_player)
+    return db_player
+
+def delete_player(db: Session, player_id: int):
+    db_player = db.query(models.Player).filter(models.Player.id == player_id).first()
+    db.delete(db_player)
+    db.commit()
+
 
 
 # Player Export
@@ -157,7 +178,35 @@ def update_tactical_formation(db: Session, formation_id: int, formation_update: 
             db.add(player_position)
     db.commit()
     return formation
+    
+# Formations
+def get_formations(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.TacticalFormation).offset(skip).limit(limit).all()
 
+def get_formation(db: Session, formation_id: int):
+    return db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
+
+def create_formation(db: Session, formation: schemas.TacticalFormationCreate):
+    db_formation = models.TacticalFormation(**formation.dict())
+    db.add(db_formation)
+    db.commit()
+    db.refresh(db_formation)
+    return db_formation
+
+def update_formation(db: Session, formation_id: int, formation: schemas.TacticalFormationUpdate):
+    db_formation = db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
+    if not db_formation:
+        return None
+    for var, value in vars(formation).items():
+        setattr(db_formation, var, value) if value else None
+    db.commit()
+    db.refresh(db_formation)
+    return db_formation
+
+def delete_formation(db: Session, formation_id: int):
+    db_formation = db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
+    db.delete(db_formation)
+    db.commit()
 
 
 # Tournament Leaderboard
@@ -187,23 +236,35 @@ def update_leaderboard(db: Session, tournament_id: int, team_id: int, result: st
     db.refresh(leaderboard)
     return leaderboard
 
+# Tournaments
+
+def get_tournaments(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Tournament).offset(skip).limit(limit).all()
+
+def get_tournament(db: Session, tournament_id: int):
+    return db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
+
 def create_tournament(db: Session, tournament: schemas.TournamentCreate):
-    db_tournament = models.Tournament(
-        name=tournament.name,
-        type=tournament.type,
-        teams_number=tournament.teams_number,
-        home_away=tournament.home_away,
-        best_teams_promoted=tournament.best_teams_promoted,
-        worst_teams_relegated=tournament.worst_teams_relegated,
-        third_place_playoff=tournament.third_place_playoff,
-        penalty_shootout=tournament.penalty_shootout,
-        promotion_to=tournament.promotion_to,
-        relegation_to=tournament.relegation_to,
-    )
+    db_tournament = models.Tournament(**tournament.dict())
     db.add(db_tournament)
     db.commit()
     db.refresh(db_tournament)
     return db_tournament
+
+def update_tournament(db: Session, tournament_id: int, tournament: schemas.TournamentUpdate):
+    db_tournament = db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
+    if not db_tournament:
+        return None
+    for var, value in vars(tournament).items():
+        setattr(db_tournament, var, value) if value else None
+    db.commit()
+    db.refresh(db_tournament)
+    return db_tournament
+
+def delete_tournament(db: Session, tournament_id: int):
+    db_tournament = db.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
+    db.delete(db_tournament)
+    db.commit()
 
 
 def handle_promotion_relegation(db: Session, tournament: models.Tournament):
@@ -231,19 +292,31 @@ def relegate_team(db: Session, team: models.Team, relegation_tournament: models.
     team.tournament_id = relegation_tournament.id
     db.commit()
 
+def get_teams(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Team).offset(skip).limit(limit).all()
+
+def get_team(db: Session, team_id: int):
+    return db.query(models.Team).filter(models.Team.id == team_id).first()
+
 def create_team(db: Session, team: schemas.TeamCreate):
-    db_team = models.Team(
-        name=team.name,
-        club_id=team.club_id,
-        tactical_formation=team.tactical_formation,
-        home_jersey_main_color=team.home_jersey_main_color,
-        home_jersey_secondary_color=team.home_jersey_secondary_color,
-        home_jersey_number_color=team.home_jersey_number_color,
-        away_jersey_main_color=team.away_jersey_main_color,
-        away_jersey_secondary_color=team.away_jersey_secondary_color,
-        away_jersey_number_color=team.away_jersey_number_color,
-    )
+    db_team = models.Team(**team.dict())
     db.add(db_team)
     db.commit()
     db.refresh(db_team)
     return db_team
+
+def update_team(db: Session, team_id: int, team: schemas.TeamUpdate):
+    db_team = db.query(models.Team).filter(models.Team.id == team_id).first()
+    if not db_team:
+        return None
+    for var, value in vars(team).items():
+        setattr(db_team, var, value) if value else None
+    db.commit()
+    db.refresh(db_team)
+    return db_team
+
+def delete_team(db: Session, team_id: int):
+    db_team = db.query(models.Team).filter(models.Team.id == team_id).first()
+    db.delete(db_team)
+    db.commit()
+
