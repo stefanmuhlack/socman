@@ -170,6 +170,8 @@ class TacticalFormation(Base):
     __tablename__ = 'tactical_formations'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)  # Name of the tactical formation (e.g., 4-4-2, 4-3-3)
+    comment_german = Column(String)  # Comment in German
+    comment_english = Column(String)  # Comment translated into English
     user_id = Column(Integer, ForeignKey('users.id'))  # Link to the user creating the formation
     created_at = Column(DateTime, default=datetime.utcnow)
     
@@ -178,6 +180,7 @@ class TacticalFormation(Base):
     
     # Optional: Reference to opponent formation for comparisons
     opponent_formation_id = Column(Integer, ForeignKey('tactical_formations.id'))
+
 
 class TacticalPlayerPosition(Base):
     __tablename__ = 'tactical_player_positions'
