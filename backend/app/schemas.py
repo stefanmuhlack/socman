@@ -3,23 +3,23 @@ from typing import Optional, List, Dict
 from datetime import datetime
 
 # Formation Schemas
-class TacticalFormationBase(BaseModel):
+class TacticalFormationCreate(BaseModel):
+    name: str
+    comment_german: Optional[str] = None
+    comment_english: Optional[str] = None
+    players: List[dict]
+
+class TacticalFormationUpdate(TacticalFormationCreate):
+    pass
+
+class TacticalFormation(BaseModel):
+    id: int
     name: str
     comment_german: Optional[str] = None
     comment_english: Optional[str] = None
 
-class TacticalFormationCreate(TacticalFormationBase):
-    pass
-
-class TacticalFormationUpdate(TacticalFormationBase):
-    pass
-
-class TacticalFormation(TacticalFormationBase):
-    id: int
-
     class Config:
         orm_mode = True
-
 
 # Team Schemas
 
