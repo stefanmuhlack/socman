@@ -32,6 +32,46 @@ select, input, textarea {
   color: var(--primary-text);
 }
 
+.formation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: repeat(4, 100px); /* Customize this for your formation */
+  grid-gap: 20px;
+}
+
+.player-list {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.player {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  cursor: grab;
+}
+
+.position {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jersey {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
 
 
 canvas {
