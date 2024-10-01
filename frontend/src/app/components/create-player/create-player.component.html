@@ -1,0 +1,57 @@
+<form (ngSubmit)="createPlayer()">
+  <div class="form-group">
+    <label for="name">Player Name</label>
+    <input type="text" class="form-control" [(ngModel)]="player.name" name="name">
+  </div>
+
+  <div class="form-group">
+    <label for="jersey_number">Jersey Number</label>
+    <input type="number" class="form-control" [(ngModel)]="player.jersey_number" name="jersey_number">
+  </div>
+
+  <!-- All player positions -->
+  <div class="form-group">
+    <label for="position">Position</label>
+    <select class="form-control" [(ngModel)]="player.position" name="position">
+      <option value="TW">Torwart</option>
+      <option value="LV">Linker Verteidiger</option>
+      <option value="IVL">Innenverteidiger Links</option>
+      <option value="IVZ">Innenverteidiger Zentral</option>
+      <option value="IVR">Innenverteidiger Rechts</option>
+      <option value="RV">Rechter Verteidiger</option>
+      <option value="DLM">Defensives linkes äußeres Mittelfeld</option>
+      <option value="DML">Defensives Mittelfeld Links</option>
+      <option value="DMZ">Defensives Mittelfeld Zentral</option>
+      <option value="DMR">Defensives Mittelfeld Rechts</option>
+      <option value="DRM">Defensives rechtes äußeres Mittelfeld</option>
+      <option value="LM">Linkes Mittelfeld</option>
+      <option value="HL">Halb Links</option>
+      <option value="MZ">Mittelfeld Zentral</option>
+      <option value="HR">Halb Rechts</option>
+      <option value="OLM">Offensives Linkes Mittelfeld</option>
+      <option value="OHL">Offensives Halblinkes Mittelfeld</option>
+      <option value="ZO">Zental Offensiv</option>
+      <option value="OHR">Offensives Halbrechtes Mittelfeld</option>
+      <option value="ORM">Offensives Rechtes Mittelfeld</option>
+      <option value="HST">Hängende Spitze</option>
+      <option value="LA">Links Außen</option>
+      <option value="STL">Sturm Links</option>
+      <option value="STZ">Sturm Zentral</option>
+      <option value="STR">Sturm Rechts</option>
+      <option value="RA">Rechts Außen</option>
+      <!-- Add all positions as listed -->
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="is_captain">Captain</label>
+    <input type="checkbox" class="form-control" [(ngModel)]="player.is_captain" name="is_captain">
+  </div>
+
+  <div class="form-group">
+    <label for="start_lineup">Starting Lineup</label>
+    <input type="checkbox" class="form-control" [(ngModel)]="player.start_lineup" name="start_lineup">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Create Player</button>
+</form>
