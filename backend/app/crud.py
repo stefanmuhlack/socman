@@ -169,7 +169,7 @@ def update_tactical_formation(db: Session, formation_id: int, formation_update: 
         db.query(models.TacticalPlayerPosition).filter_by(formation_id=formation_id).delete()
         
         # Re-add players
-        for player in formation_update.players:
+        for player in formation_update.players:https://github.com/stefanmuhlack/socman/blob/development/backend/app/crud.py
             player_position = models.TacticalPlayerPosition(
                 player_id=player['player_id'],
                 formation_id=formation.id,
@@ -186,7 +186,7 @@ def get_formations(db: Session, skip: int = 0, limit: int = 10):
 def get_formation(db: Session, formation_id: int):
     return db.query(models.TacticalFormation).filter(models.TacticalFormation.id == formation_id).first()
 
-def create_formation(db: Session, formation: schemas.TacticalFormationCreate):
+    def create_formation(db: Session, formation: schemas.TacticalFormationCreate):
     db_formation = models.TacticalFormation(**formation.dict())
     db.add(db_formation)
     db.commit()
