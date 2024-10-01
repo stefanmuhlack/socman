@@ -17,6 +17,32 @@ class Team(TeamBase):
     class Config:
         orm_mode = True
 
+# Tactical Formations
+
+class TacticalFormationCreate(BaseModel):
+    name: str
+    comment_german: Optional[str] = None
+    comment_english: Optional[str] = None
+    players: List[dict]  # List of players with their positions
+
+class TacticalFormationUpdate(BaseModel):
+    name: Optional[str]
+    comment_german: Optional[str] = None
+    comment_english: Optional[str] = None
+    players: Optional[List[dict]] = None
+
+class TacticalFormation(BaseModel):
+    id: int
+    name: str
+    comment_german: Optional[str]
+    comment_english: Optional[str]
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+
 # Player Schemas
 class PlayerBase(BaseModel):
     name: str
