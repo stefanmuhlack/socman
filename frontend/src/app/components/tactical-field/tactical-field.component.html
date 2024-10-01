@@ -3,6 +3,14 @@
     <div *ngFor="let player of players" class="player">
         <app-jersey [player]="player" [position]="player.position">
         </app-jersey>
+
+         <div *ngFor="let player of players" class="player" draggable="true" (dragstart)="onDragStart(player)" (drop)="onDrop(player)" (dragover)="allowDrop($event)">
+    <app-jersey [player]="player" [position]="player.position"></app-jersey>
+    <span>{{ player.name }}</span>
+    <span>{{ player.position }}</span>
+  </div>
+        
+        
         <!-- Allow user to drag players to different positions -->
         <select [(ngModel)]="player.position" (change)="onPlayerPositionChange(player, player.position)">
             <option value="TW">Torwart (TW)</option>
