@@ -1,34 +1,37 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import crud, models, schemas
+from typing import List
 from ..database import get_db
+from .. import schemas, crud
 
 router = APIRouter()
 
-# Get tournament leaderboard with pagination
-@router.get("/tournaments/{tournament_id}/leaderboard", response_model=List[schemas.TournamentLeaderboard])
-def get_leaderboard(tournament_id: int, page: int = Query(1, ge=1), page_size: int = Query(10, le=50), db: Session = Depends(get_db)):
-    return crud.get_tournament_leaderboard(db=db, tournament_id=tournament_id, page=page, page_size=page_size)
+# Get all tournaments
+@router.get("/", response_model=List[schemas.Tournament])
+def get_tournaments(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    tournaments = crud.get_tournaments(db, skip=skip, limit=limit)
+    return tournaments
+
+# Get a tournament by ID
+@router.get("/{tournament_id}", response_model=schemas.Tournament)
+def get_tournament(tournament_id: int, db: Session = Depends(get_db)):
+    tournament = crud.get_tournament(db, tournament_id=tournament_id)
+    if not tournament:
+        raise HTTPException(status_code=404, detail="Tournament not found")
+    return tournament
 
 # Create a new tournament
-@router.post("/tournaments/", response_model=schemas.Tournament)
+@router.post("/", response_model=schemas.Tournament)
 def create_tournament(tournament: schemas.TournamentCreate, db: Session = Depends(get_db)):
     return crud.create_tournament(db=db, tournament=tournament)
 
-# Get all tournaments
-@router.get("/tournaments/", response_model=List[schemas.Tournament])
-def get_tournaments(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return crud.get_tournaments(db=db, skip=skip, limit=limit)
+# Update a tournament
+@router.put("/{tournament_id}", response_model=schemas.Tournament)
+def update_tournament(tournament_id: int, tournament: schemas.TournamentUpdate, db: Session = Depends(get_db)):
+    return crud.update_tournament(db=db, tournament_id=tournament_id, tournament=tournament)
 
-# Get tournament leaderboard
-@router.get("/tournaments/{tournament_id}/leaderboard", response_model=List[schemas.TournamentLeaderboard])
-def get_leaderboard(tournament_id: int, db: Session = Depends(get_db)):
-    return crud.get_tournament_leaderboard(db=db, tournament_id=tournament_id)
-
-# Apply promotion/relegation logic
-@router.post("/tournaments/promotion-relegation/")
-def apply_promotion_relegation(tournament_id: int, db: Session = Depends(get_db)):
-    tournament = crud.get_tournament_by_id(db, tournament_id)
-    if not tournament:
-        raise HTTPException(status_code=404, detail="Tournament not found")
-    crud.handle_promotion_relegation(db=db, tournament=tournament)
+# Delete a tournament
+@router.delete("/{tournament_id}")
+def delete_tournament(tournament_id: int, db: Session = Depends(get_db)):
+    crud.delete_tournament(db=db, tournament_id=tournament_id)
+    return {"message": "Tournament deleted"}
