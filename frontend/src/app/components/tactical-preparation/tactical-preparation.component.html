@@ -1,3 +1,28 @@
+<div class="formation-container">
+  <h2>{{ selectedFormation.name }} Formation</h2>
+
+  <!-- Player List to be dragged into positions -->
+  <div class="player-list">
+    <div *ngFor="let player of players" class="player" draggable="true" (dragstart)="onDragStart(player)">
+      <span>{{ player.name }}</span>
+      <span>{{ player.position }}</span>
+    </div>
+  </div>
+
+  <!-- Formation Field -->
+  <div class="field">
+    <div *ngFor="let position of formationPositions" class="position" (drop)="onDrop(position)" (dragover)="allowDrop($event)">
+      <span>{{ position.label }}</span>
+      <app-jersey [player]="position.player" [jerseyColor]="getJerseyColor(position.teamType)"></app-jersey>
+    </div>
+  </div>
+
+  <!-- Submit Formation -->
+  <button (click)="saveFormation()">Save Formation</button>
+</div>
+
+
+
 <div class="tactical-preparation">
     <h2>Create a Tactical Formation</h2>
   <form (ngSubmit)="createFormation()">
