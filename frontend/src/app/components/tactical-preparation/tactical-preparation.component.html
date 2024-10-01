@@ -1,17 +1,22 @@
 <div class="tactical-preparation">
     <h2>Create a Tactical Formation</h2>
-    <form (ngSubmit)="createFormation()">
-        <div class="form-group">
-            <label for="formationName">Formation Name</label>
-            <input type="text" class="form-control" [(ngModel)]="formation.name" name="formationName" required>
-        </div>
-        
-        <!-- Player selection grid -->
-        <div class="field-visualization">
-            <app-tactical-field [players]="players" (playerPositionChange)="onPlayerPositionChange($event)">
-            </app-tactical-field>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Save Formation</button>
-    </form>
+  <form (ngSubmit)="createFormation()">
+    <div class="form-group">
+        <label for="formationName">Formation Name</label>
+        <select class="form-control" [(ngModel)]="formation.name" name="formationName" required>
+            <option *ngFor="let formation of formations" [value]="formation.name">
+                {{ formation.name }} - {{ formation.comment_english }}
+            </option>
+        </select>
+    </div>
+    
+    <!-- Comment field for further notes -->
+    <div class="form-group">
+        <label for="formationComment">Comment (English)</label>
+        <textarea class="form-control" [(ngModel)]="formation.comment_english" name="formationComment"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Formation</button>
+</form>
+
 </div>
