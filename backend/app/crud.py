@@ -103,7 +103,12 @@ def create_match_statistics(db: Session, match_id: int, player_id: int, stats: d
 
 # Tactical Formations LineUps
 def create_tactical_formation(db: Session, formation: schemas.TacticalFormationCreate, user_id: int):
-    db_formation = models.TacticalFormation(name=formation.name, user_id=user_id)
+    db_formation = models.TacticalFormation(
+        name=formation.name,
+        user_id=user_id,
+        comment_german=formation.comment_german,
+        comment_english=formation.comment_english
+    )
     db.add(db_formation)
     db.commit()
     db.refresh(db_formation)
@@ -111,9 +116,9 @@ def create_tactical_formation(db: Session, formation: schemas.TacticalFormationC
     # Add players to the formation
     for player in formation.players:
         player_position = models.TacticalPlayerPosition(
-            player_id=player.player_id,
+            player_id=player['player_id'],
             formation_id=db_formation.id,
-            position=player.position
+            position=player['position']
         )
         db.add(player_position)
     db.commit()
@@ -132,6 +137,12 @@ def update_tactical_formation(db: Session, formation_id: int, formation_update: 
     if formation_update.name:
         formation.name = formation_update.name
     
+    if formation_update.comment_german:
+        formation.comment_german = formation_update.comment_german
+        
+    if formation_update.comment_english:
+        formation.comment_english = formation_update.comment_english
+
     if formation_update.players:
         # Clear current players
         db.query(models.TacticalPlayerPosition).filter_by(formation_id=formation_id).delete()
@@ -139,14 +150,13 @@ def update_tactical_formation(db: Session, formation_id: int, formation_update: 
         # Re-add players
         for player in formation_update.players:
             player_position = models.TacticalPlayerPosition(
-                player_id=player.player_id,
+                player_id=player['player_id'],
                 formation_id=formation.id,
-                position=player.position
+                position=player['position']
             )
             db.add(player_position)
     db.commit()
     return formation
-
 
 
 
