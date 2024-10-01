@@ -26,36 +26,43 @@ class Club(Base):
     admin = relationship("User", back_populates="clubs")
 
 class PlayerTeam(Base):
-    __tablename__ = 'player_teams'
-    id = Column(Integer, primary_key=True, index=True)
-    player_id = Column(Integer, ForeignKey('players.id'))
-    team_id = Column(Integer, ForeignKey('teams.id'))
-    role = Column(String)  # Primary or secondary team?
-    player = relationship("Player", back_populates="player_teams")
-    team = relationship("Team", back_populates="player_teams")
-
+    __tablename__ = 'player_team'
+    player_id = Column(Integer, ForeignKey('players.id'), primary_key=True)
+    team_id = Column(Integer, ForeignKey('teams.id'), primary_key=True)
+    player = relationship("Player", back_populates="teams")
+    team = relationship("Team", back_populates="players")
+    start_position = Column(String, nullable=True)  # Player's position for the match
+    
 class Team(Base):
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     club_id = Column(Integer, ForeignKey('clubs.id'))
-    league_id = Column(Integer, ForeignKey('leagues.id'))
-    tournament_id = Column(Integer, ForeignKey('tournaments.id'))
-    club = relationship("Club", back_populates="teams")
-    league = relationship("League", back_populates="teams")
-    tournament = relationship("Tournament", back_populates="teams")
-    player_teams = relationship("PlayerTeam", back_populates="team")
+    players = relationship("PlayerTeam", back_populates="team")
+    tactical_formation = Column(String)  # Tactical formation (e.g., 4-4-2, 4-3-3, etc.)
+    
+    # Home jersey details
+    home_jersey_main_color = Column(String)
+    home_jersey_secondary_color = Column(String)
+    home_jersey_number_color = Column(String)
+    
+    # Away jersey details
+    away_jersey_main_color = Column(String)
+    away_jersey_secondary_color = Column(String)
+    away_jersey_number_color = Column(String)
 
 class Player(Base):
     __tablename__ = 'players'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    date_of_birth = Column(DateTime, nullable=False)  # Required Date of Birth
-    height = Column(Float, nullable=False)  # Height in cm (required)
-    weight = Column(Float, nullable=False)  # Weight in kg (required)
-    position = Column(String, nullable=False)  # Player position (required)
-    player_teams = relationship("PlayerTeam", back_populates="player")
-    rating_history = relationship("PlayerRatingHistory", back_populates="player")
+    date_of_birth = Column(DateTime, nullable=False)
+    height = Column(Float, nullable=False)
+    weight = Column(Float, nullable=False)
+    position = Column(String, nullable=False)  # Detailed position like TW, LV, DMZ
+    jersey_number = Column(Integer, nullable=False)
+    is_captain = Column(Boolean, default=False)
+    start_lineup = Column(Boolean, default=False)  # Whether the player is in the starting 11
+    teams = relationship("PlayerTeam", back_populates="player")
 
 class PlayerSelfAssessment(Base):
     __tablename__ = 'player_self_assessments'
@@ -115,15 +122,15 @@ class TournamentLeaderboard(Base):
 class Match(Base):
     __tablename__ = 'matches'
     id = Column(Integer, primary_key=True, index=True)
-    team1_id = Column(Integer, ForeignKey('teams.id'))
-    team2_id = Column(Integer, ForeignKey('teams.id'))
-    date = Column(DateTime)
-    goals_team1 = Column(Integer, default=0)
-    goals_team2 = Column(Integer, default=0)
-    extra_time = Column(Boolean, default=False)  # Extra time played
-    penalty_shootout = Column(Boolean, default=False)  # Penalty shootout if true
-    home_away = Column(String)  # "home" or "away"
-    result = Column(String)  # Store result as "win", "draw", "loss"
+    home_team_id = Column(Integer, ForeignKey('teams.id'))
+    away_team_id = Column(Integer, ForeignKey('teams.id'))
+    match_date = Column(DateTime, default=datetime.utcnow)
+    home_team = relationship("Team", foreign_keys=[home_team_id])
+    away_team = relationship("Team", foreign_keys=[away_team_id])
+    home_score = Column(Integer, default=0)
+    away_score = Column(Integer, default=0)
+    tactical_formation_home = Column(String)  # Tactical formation of the home team
+    tactical_formation_away = Column(String)  # Tactical formation of the away team
     
 class MatchStatistics(Base):
     __tablename__ = 'match_statistics'
