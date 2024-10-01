@@ -1,0 +1,4 @@
+<div class="jersey" [style.backgroundColor]="jerseyColor">
+  <span *ngIf="player">{{ player.name }} ({{ player.jerseyNumber }})</span>
+  <span *ngIf="!player">Empty</span>
+</div>
