@@ -1,0 +1,60 @@
+<form (ngSubmit)="createTeam()">
+  <div class="form-group">
+    <label for="name">Team Name</label>
+    <input type="text" class="form-control" [(ngModel)]="team.name" name="name">
+  </div>
+  
+  <div class="form-group">
+    <label for="club_id">Club</label>
+    <select class="form-control" [(ngModel)]="team.club_id" name="club_id">
+      <option *ngFor="let club of clubs" [value]="club.id">{{ club.name }}</option>
+    </select>
+  </div>
+
+  <!-- Tactical Formation -->
+  <div class="form-group">
+    <label for="tactical_formation">Tactical Formation</label>
+    <select class="form-control" [(ngModel)]="team.tactical_formation" name="tactical_formation">
+      <option value="4-4-2">4-4-2</option>
+      <option value="4-3-3">4-3-3</option>
+      <option value="4-2-3-1">4-2-3-1</option>
+      <option value="5-3-2">5-3-2</option>
+      <option value="4-5-1">4-5-1</option>
+      <option value="3-4-3">3-4-3</option>
+      <!-- Add all tactical formations -->
+    </select>
+  </div>
+
+  <!-- Jersey Details -->
+  <div class="form-group">
+    <label for="home_jersey_main_color">Home Jersey Main Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.home_jersey_main_color" name="home_jersey_main_color">
+  </div>
+
+  <div class="form-group">
+    <label for="home_jersey_secondary_color">Home Jersey Secondary Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.home_jersey_secondary_color" name="home_jersey_secondary_color">
+  </div>
+
+  <div class="form-group">
+    <label for="home_jersey_number_color">Home Jersey Number Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.home_jersey_number_color" name="home_jersey_number_color">
+  </div>
+
+  <div class="form-group">
+    <label for="away_jersey_main_color">Away Jersey Main Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.away_jersey_main_color" name="away_jersey_main_color">
+  </div>
+
+  <div class="form-group">
+    <label for="away_jersey_secondary_color">Away Jersey Secondary Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.away_jersey_secondary_color" name="away_jersey_secondary_color">
+  </div>
+
+  <div class="form-group">
+    <label for="away_jersey_number_color">Away Jersey Number Color</label>
+    <input type="text" class="form-control" [(ngModel)]="team.away_jersey_number_color" name="away_jersey_number_color">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Create Team</button>
+</form>
