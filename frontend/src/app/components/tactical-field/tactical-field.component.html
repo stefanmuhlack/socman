@@ -18,5 +18,13 @@
             <option value="IVL">Innenverteidiger Links (IVL)</option>
             <!-- Add all positions as options -->
         </select>
+
+    <div class="field">
+  <div *ngFor="let position of formationPositions" class="position" (drop)="onDrop(position)" (dragover)="allowDrop($event)">
+    <app-jersey [player]="position.player" [jerseyColor]="getJerseyColor(position.teamType)"></app-jersey>
+    <span>{{ position.label }}</span>
+  </div>
+</div>
+
     </div>
 </div>
