@@ -1,0 +1,14 @@
+<div class="field">
+    <!-- Visualize player positions based on the current formation -->
+    <div *ngFor="let player of players" class="player">
+        <app-jersey [player]="player" [position]="player.position">
+        </app-jersey>
+        <!-- Allow user to drag players to different positions -->
+        <select [(ngModel)]="player.position" (change)="onPlayerPositionChange(player, player.position)">
+            <option value="TW">Torwart (TW)</option>
+            <option value="LV">Linker Verteidiger (LV)</option>
+            <option value="IVL">Innenverteidiger Links (IVL)</option>
+            <!-- Add all positions as options -->
+        </select>
+    </div>
+</div>
