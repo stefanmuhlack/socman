@@ -1,3 +1,39 @@
+:root {
+  --primary-bg: #ffffff;
+  --primary-text: #000000;
+  --secondary-text: #4f4f4f;
+  --accent-color: #1e88e5; /* Blue for buttons */
+}
+
+body.dark-mode {
+  --primary-bg: #121212;
+  --primary-text: #ffffff;
+  --secondary-text: #b0b0b0;
+  --accent-color: #4caf50; /* Green for buttons in dark mode */
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+button {
+  background-color: var(--accent-color);
+  color: var(--primary-text);
+}
+
+/* Additional styling for form elements, headers, etc. */
+form {
+  margin: 20px;
+}
+
+select, input, textarea {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+
+
 canvas {
   max-width: 100%;
 }
