@@ -5,68 +5,53 @@ import { Component } from '@angular/core';
   templateUrl: './tactical-preparation.component.html',
 })
 export class TacticalPreparationComponent {
+  selectedFormation = { name: '4-4-2' }; // Example formation
   players = [
-    { id: 1, name: 'Torwart', position: 'TW' },
-    { id: 2, name: 'Linker Verteidiger', position: 'LV' },
-    { id: 3, name: 'Innenverteidiger Links', position: 'IVL' },
-    { id: 4, name: 'Innenverteidiger Zentral', position: 'IVZ' },
-    { id: 5, name: 'Innenverteidiger Rechtsr', position: 'IVR' },
-    { id: 6, name: 'Innenverteidiger Links', position: 'IVL' },
-    { id: 7, name: 'Rechter Verteidiger', position: 'RV' },
-    { id: 8, name: 'Defensives linkes äußeres Mittelfeld', position: 'DLM' },
-    { id: 9, name: 'Defensives Mittelfeld Links', position: 'DML' },
-    { id: 10, name: 'Defensives Mittelfeld Zentral', position: 'DMZ' },
-    { id: 11, name: 'Defensives Mittelfeld Rechts', position: 'DMR' },
-    { id: 12, name: 'Defensives rechtes äußeres Mittelfeld', position: 'DRM' },
-    { id: 13, name: 'Linkes Mittelfeld', position: 'LM' },
-    { id: 14, name: 'Halb Links', position: 'HL' },
-    { id: 15, name: 'Mittelfeld Zentral', position: 'MZ' },
-    { id: 16, name: 'Halb Rechts', position: 'HR' },
-    { id: 17, name: 'Rechtes Mittelfeld', position: 'RM' },
-    { id: 18, name: 'Offensives Linkes Mittelfeld', position: 'OLM' },
-    { id: 19, name: 'Offensives Halblinkes Mittelfeld', position: 'OHL' },
-    { id: 20, name: 'Zentral Offensiv', position: 'ZO' },
-    { id: 20, name: 'Offensives Halbrechtes Mittelfeld', position: 'OHR' },
-    { id: 21, name: 'Offensives Rechtes Mittelfeld', position: 'ORM' },
-    { id: 22, name: 'Hängende Spitze', position: 'HST' },
-    { id: 23, name: 'Links Außen', position: 'LA' },
-    { id: 24, name: 'Sturm Links', position: 'STL' },
-    { id: 25, name: 'Sturm Zentral', position: 'STZ' },
-    { id: 26, name: 'Sturm Rechts', position: 'STR' },
-    { id: 27, name: ' Rechts Außen', position: 'RA' },
-    
-    // Add more players with positions
+    { id: 1, name: 'Player 1', position: 'LV' },
+    { id: 2, name: 'Player 2', position: 'IVL' },
+    // more players
+  ];
+  formationPositions = [
+    { label: 'LV', player: null, teamType: 'home' }, // For each position
+    { label: 'IVL', player: null, teamType: 'home' },
+    // Define more positions based on the selected formation
   ];
 
-  onPlayerPositionChange(event: any) {
-    const { player, target } = event;
-    console.log('Player moved:', player);
-    console.log('New target position:', target.position);
+  draggedPlayer: any = null;
+
+  // Function to start dragging
+  onDragStart(player: any) {
+    this.draggedPlayer = player;
   }
 
+  // Allow drop
+  allowDrop(event: any) {
+    event.preventDefault();
+  }
+
+  // Drop player into position
+  onDrop(position: any) {
+    position.player = this.draggedPlayer;
+    this.draggedPlayer = null; // Reset the dragged player
+  }
+
+  // Save the current formation
   saveFormation() {
-  const formationData = {
-    formationName: this.formation.name,
-    players: this.players.map(p => ({
-      player_id: p.id,
-      position: p.position
-    }))
-  };
-
-  this.tacticalService.saveFormation(formationData).subscribe(response => {
-    alert('Formation saved successfully!');
-  });
-}
-
-
-
-createFormation() {
     const formationData = {
-        name: this.formation.name,
-        players: this.players.map(p => ({ player_id: p.id, position: p.position }))
+      formationName: this.selectedFormation.name,
+      positions: this.formationPositions.map(p => ({
+        position: p.label,
+        player_id: p.player ? p.player.id : null
+      })),
     };
-    
-    this.tacticalService.createFormation(formationData).subscribe(response => {
-        alert('Formation saved successfully!');
+
+    this.tacticalService.createFormation(formationData).subscribe(() => {
+      alert('Formation saved successfully!');
     });
+  }
+
+  // Dynamically get jersey color based on team type
+  getJerseyColor(teamType: string) {
+    return teamType === 'home' ? this.homeJerseyColor : this.awayJerseyColor;
+  }
 }
