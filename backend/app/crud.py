@@ -171,3 +171,20 @@ def promote_team(db: Session, team: models.Team, promotion_tournament: models.To
 def relegate_team(db: Session, team: models.Team, relegation_tournament: models.Tournament):
     team.tournament_id = relegation_tournament.id
     db.commit()
+
+def create_team(db: Session, team: schemas.TeamCreate):
+    db_team = models.Team(
+        name=team.name,
+        club_id=team.club_id,
+        tactical_formation=team.tactical_formation,
+        home_jersey_main_color=team.home_jersey_main_color,
+        home_jersey_secondary_color=team.home_jersey_secondary_color,
+        home_jersey_number_color=team.home_jersey_number_color,
+        away_jersey_main_color=team.away_jersey_main_color,
+        away_jersey_secondary_color=team.away_jersey_secondary_color,
+        away_jersey_number_color=team.away_jersey_number_color,
+    )
+    db.add(db_team)
+    db.commit()
+    db.refresh(db_team)
+    return db_team
