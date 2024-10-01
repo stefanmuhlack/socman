@@ -165,3 +165,39 @@ class DynamicMetric(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     description = Column(String)
+
+class TacticalFormation(Base):
+    __tablename__ = 'tactical_formations'
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)  # Name of the tactical formation (e.g., 4-4-2, 4-3-3)
+    user_id = Column(Integer, ForeignKey('users.id'))  # Link to the user creating the formation
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Players assigned to this formation
+    players = relationship("TacticalPlayerPosition", back_populates="formation")
+    
+    # Optional: Reference to opponent formation for comparisons
+    opponent_formation_id = Column(Integer, ForeignKey('tactical_formations.id'))
+
+class TacticalPlayerPosition(Base):
+    __tablename__ = 'tactical_player_positions'
+    id = Column(Integer, primary_key=True, index=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    formation_id = Column(Integer, ForeignKey('tactical_formations.id'))
+    
+    # Player's position in this specific tactical formation (e.g., STZ, LV, DMZ)
+    position = Column(String, nullable=False)
+    
+    formation = relationship("TacticalFormation", back_populates="players")
+    player = relationship("Player", back_populates="positions")
+
+class JerseyColor(Base):
+    __tablename__ = 'jersey_colors'
+    id = Column(Integer, primary_key=True, index=True)
+    team_id = Column(Integer, ForeignKey('teams.id'))
+    main_color = Column(String)  # Main jersey color
+    secondary_color = Column(String)  # Secondary color
+    number_color = Column(String)  # Color of the jersey number
+    is_home = Column(Boolean, default=True)  # Home or Away Jersey
+    
+    team = relationship("Team", back_populates="jersey_colors")
