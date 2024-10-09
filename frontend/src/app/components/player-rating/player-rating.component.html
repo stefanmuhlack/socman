@@ -2,3 +2,27 @@
 <canvas id="spiderChart"></canvas>
 
 <button (click)="downloadPlayerData()">Export Player Data</button>
+
+<button (click)="toggleEditMode()">Edit Player Data</button>
+
+<div *ngIf="editMode">
+    <form (ngSubmit)="createPlayerRating()">
+        <div>
+            <label for="player_id">Player ID:</label>
+            <input type="number" [(ngModel)]="playerRating.player_id" name="player_id" required />
+        </div>
+        <div>
+            <label for="coach_id">Coach ID:</label>
+            <input type="number" [(ngModel)]="playerRating.coach_id" name="coach_id" required />
+        </div>
+        <div *ngFor="let metric of availableMetrics">
+            <label [for]="metric.name">{{ metric.name }}:</label>
+            <input type="number" [(ngModel)]="metric.value" [name]="metric.name" required />
+        </div>
+        <div>
+            <label for="rating_date">Rating Date:</label>
+            <input type="date" [(ngModel)]="playerRating.rating_date" name="rating_date" required />
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
