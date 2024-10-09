@@ -21,13 +21,6 @@ export class DashboardComponent implements OnInit {
   loadDashboard(): void {
     this.userRole = this.authService.getUserRole(); // Fetch user role from AuthService
   }
-}
-@Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-})
-export class DashboardComponent {
-  constructor(private playerRatingService: PlayerRatingService) {}
 
   exportPlayerData() {
     this.playerRatingService.exportPlayerData().subscribe((data) => {
