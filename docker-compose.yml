@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:13
@@ -29,14 +27,26 @@ services:
     networks:
       - socman-network
 
-  frontend:
+
+  frontend-ssr:
     build:
       context: .
       dockerfile: frontend/socman_fe.Dockerfile
-    volumes:
-      - ./frontend:/app
+      target: server
     ports:
-      - "80:80"
+      - "4000:4000"
+    depends_on:
+      - backend
+    networks:
+      - socman-network
+
+  frontend-static:
+    build:
+      context: .
+      dockerfile: frontend/socman_fe.Dockerfile
+      target: browser
+    ports:
+      - "5200:80"
     depends_on:
       - backend
     networks:

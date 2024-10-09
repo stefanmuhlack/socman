@@ -38,7 +38,7 @@ def get_db():
 
 # Root endpoint (health check)
 @app.get("/")
-def read_root():
+async def read_root():
     return {"message": "SocMan API is running"}
 
 # Authentication route for login
