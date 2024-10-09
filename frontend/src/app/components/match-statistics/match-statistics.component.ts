@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { MatchStatisticsService } from '../../services/match-statistics.service';
 
 @Component({
-  selector: 'app-create-match-statistics',
-  templateUrl: './create-match-statistics.component.html',
 })
 export class CreateMatchStatisticsComponent {
   statistics = {
