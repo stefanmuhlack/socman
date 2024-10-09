@@ -1,0 +1,5 @@
+<nav>
+    <button *ngIf="isLoggedIn" (click)="toggleLoginState()">Logout</button>
+    <button *ngIf="!isLoggedIn" (click)="toggleLoginState()">Login</button>
+  </nav>
+  
