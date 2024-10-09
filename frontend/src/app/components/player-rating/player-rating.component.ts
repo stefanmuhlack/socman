@@ -25,16 +25,17 @@ export class PlayerRatingComponent implements OnInit {
     player_id: 0,
     coach_id: 0,
     metrics: {} as { name: string, value: number}[],  // Metrics will be stored dynamically
-    ball_manipulation: 8,
-    kicking_ability: 7,
-    passing_ability: 9,
-    duel_tackling: 6,
-    field_coverage: 7,
-    blocking_ability: 8,
-    game_strategy: 7,
-    playmaking_risk: 5,
+    ballManipulation: 8,
+    kickingAbility: 7,
+    passingAbility: 9,
+    duelTackling: 6,
+    fieldCoverage: 7,
+    blockingAbility: 8,
+    gameStrategy: 7,
+    playmakingRisk: 5,
     rating_date: new Date()
   };
+  
 
   player = {
     name: 'Player 1',
