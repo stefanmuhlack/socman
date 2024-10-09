@@ -24,6 +24,6 @@ export class MatchStatisticsService {
   }
 
   submitStatistics(MatchStatistics: MatchStatistics): Observable<MatchStatistics> {
-    return this.http.patch<MatchStatistics>(`${this.apiUrl}${MatchStatistics.id}`, MatchStatistics);
+    return this.http.patch<MatchStatistics>(`${this.apiUrl}${MatchStatistics.match_id}`, MatchStatistics);
   }
 }
