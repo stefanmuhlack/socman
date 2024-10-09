@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
 import { PlayerRatingService } from '../../services/player-rating.service';
 
 @Component({
