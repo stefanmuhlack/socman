@@ -1,22 +1,21 @@
-# Use Node.js image to build Angular
-FROM node:14 as build
+# Dockerfile for Frontend
+FROM node:18-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
 # Install dependencies
-COPY frontend/package.json frontend/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the app code
-COPY frontend/ .
+# Copy all source files
+COPY . .
 
 # Build the Angular app
 RUN npm run build --prod
 
-# Use Nginx to serve the built Angular app
+# Stage 2: Nginx to serve the Angular app
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose port 80
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
