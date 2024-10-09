@@ -11,12 +11,17 @@ export class PlayerRatingService {
 
   constructor(private http: HttpClient) {}
 
+  getPlayerRatings(playerId: number): Observable<PlayerRating[]>{
+    // TODO: Implement http get
+    return {} as Observable<PlayerRating[]>
+  }
+
   exportPlayerData(): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/export`, { responseType: 'blob' });
   }
 
   createPlayerRating(PlayerRating: PlayerRating): Observable<PlayerRating>{
-    // TODO: Implement
+    // TODO: Implement http post
     return {} as Observable<PlayerRating>
   }
 }
