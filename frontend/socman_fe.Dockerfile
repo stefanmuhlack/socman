@@ -4,11 +4,11 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Install dependencies
-COPY package.json package-lock.json ./
+COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
 
 # Copy all source files
-COPY . .
+COPY  frontend/ ./
 
 # Build the Angular app
 RUN npm run build --prod

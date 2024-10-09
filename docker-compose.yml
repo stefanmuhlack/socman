@@ -33,6 +33,8 @@ services:
     build:
       context: .
       dockerfile: frontend/socman_fe.Dockerfile
+    volumes:
+      - ./frontend:/app
     ports:
       - "80:80"
     depends_on:
