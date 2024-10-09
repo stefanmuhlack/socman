@@ -12,7 +12,9 @@ import { PlayerRatingService } from '../../services/player-rating.service';
 export class DashboardComponent implements OnInit {
   userRole: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private playerRatingService: PlayerRatingService, private router: Router) {
+    this.userRole = {} as any 
+   }
 
   ngOnInit(): void {
     this.loadDashboard();
