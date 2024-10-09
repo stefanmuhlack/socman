@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: socman_db
+      POSTGRES_USER: socman_user
+      POSTGRES_PASSWORD: socman_pass
+    ports:
+      - "5432:5432"
+    networks:
+      - socman-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/socman_be.Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://socman_user:socman_pass@postgres/socman_db
+    depends_on:
+      - postgres
+    networks:
+      - socman-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/socman_fe.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - socman-network
+
+networks:
+  socman-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
