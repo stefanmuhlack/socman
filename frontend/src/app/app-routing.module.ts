@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { PlayerRatingChartComponent } from './components/player-rating-chart/player-rating-chart.component';
 
 const routes: Routes = [
-  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
-  { path: 'player-ratings', loadChildren: () => import('./player-rating/player-rating.module').then(m => m.PlayerRatingModule) },
-  { path: 'tournament-leaderboard', loadChildren: () => import('./tournament-leaderboard/tournament-leaderboard.module').then(m => m.TournamentLeaderboardModule) },
-  { path: 'match-statistics', loadChildren: () => import('./match-statistics/match-statistics.module').then(m => m.MatchStatisticsModule) },
+  { path: 'dashboard', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'player-ratings', loadChildren: () => import('./components/player-rating/player-rating.module').then(m => m.PlayerRatingModule) },
+  { path: 'tournament-leaderboard', loadChildren: () => import('./components/tournament-leaderboard/tournament-leaderboard.module').then(m => m.TournamentLeaderboardModule) },
+  { path: 'match-statistics', loadChildren: () => import('./components/match-statistics/match-statistics.module').then(m => m.MatchStatisticsModule) },
 ];
 
 @NgModule({
