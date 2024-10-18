@@ -18,7 +18,7 @@ export class TournamentLeaderboardComponent implements OnInit {
     this.loadLeaderboard(this.currentPage, this.pageSize);
   }
 
-  loadLeaderboard(page: number, pageSize: number): void {
+  loadLeaderboard(page: number, pageSize: number = this.pageSize): void {
     this.tournamentService.getLeaderboard(this.tournamentId, page, pageSize).subscribe((data) => {
       this.leaderboard = data.items;  // assuming the backend returns an object with items and totalItems
       this.totalItems = data.totalItems;
