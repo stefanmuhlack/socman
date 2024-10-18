@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'notifications', component: NotificationComponent },
   { path: 'create-tournament', component: CreateTournamentComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // default route
+  { path: '*', redirectTo: '/dashboard', pathMatch: 'full' }, // default route
   { path: '**', redirectTo: '/dashboard' } // wildcard route
 ];
 

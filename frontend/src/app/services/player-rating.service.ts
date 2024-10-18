@@ -24,4 +24,9 @@ export class PlayerRatingService {
     // TODO: Implement http post
     return {} as Observable<PlayerRating>
   }
+  
+  submitSelfAssessment(assessment: PlayerRating): Observable<PlayerRating>{
+    // TODO: Implement http post
+    return {} as Observable<PlayerRating>
+  }
 }

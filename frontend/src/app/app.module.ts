@@ -4,12 +4,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { PlayerRatingChartComponent } from './components/player-rating-chart/player-rating-chart.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlayerRatingChartComponent,
     // other components
   ],
   imports: [
@@ -18,7 +17,7 @@ import { PlayerRatingChartComponent } from './components/player-rating-chart/pla
     FormsModule,
     // other modules
   ],
-  providers: [provideCharts(withDefaultRegisterables())],
+  providers: [provideCharts(withDefaultRegisterables()),provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

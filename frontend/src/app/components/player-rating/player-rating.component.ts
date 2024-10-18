@@ -3,10 +3,14 @@ import { Chart } from 'chart.js';
 import { PlayerRatingService } from '../../services/player-rating.service';
 import { DynamicMetricService } from '../../services/dynamic-metric.service';
 import { PlayerRating } from '../../models/player-rating.model';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-player-rating',
   templateUrl: './player-rating.component.html',
+  imports: [FormsModule, CommonModule]
 })
 
 export class PlayerRatingComponent implements OnInit {
@@ -84,9 +88,9 @@ export class PlayerRatingComponent implements OnInit {
         }]
       },
       options: {
-        scale: {
-          ticks: { beginAtZero: true }
-        }
+        // scale: {
+        //   ticks: { beginAtZero: true }
+        // }
       }
     });
   }
@@ -94,17 +98,22 @@ export class PlayerRatingComponent implements OnInit {
   createPlayerRating() {
     // Convert metrics array into a dictionary
     this.playerRating.metrics = this.availableMetrics.reduce((acc, metric) => {
-      acc[metric.name] = metric.value;
+      //acc[metric.name] = metric.value;
       return acc;
     }, {});
 
-    this.playerRatingService.createPlayerRating(this.playerRating).subscribe(
-      () => {
-        // Success handling (e.g., redirect, display success message)
-      },
-      error => {
-        // Error handling
-      }
+    this.playerRatingService.createPlayerRating(this.playerRating).subscribe({
+        next: () => {
+          // Success handling (e.g., redirect, display success message)
+        },
+        error: error => {
+          // Error handling
+        },
+        complete: ()=>{
+          // Complete handling
+        }
+    }
+      
     );
   }
 

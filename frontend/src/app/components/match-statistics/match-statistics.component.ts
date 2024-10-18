@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { MatchStatisticsService } from '../../services/match-statistics.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
+  standalone: true,
   selector: 'app-match-statistics',
   templateUrl: './match-statistics.component.html',
+  imports: [FormsModule]
 })
 export class CreateMatchStatisticsComponent {
   statistics = {

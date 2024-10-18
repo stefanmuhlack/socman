@@ -3,11 +3,12 @@ import { PlayerRatingService } from '../../services/player-rating.service';
 import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
+  standalone: true,
   selector: 'app-player-rating-history',
   templateUrl: './player-rating-history.component.html',
 })
 export class PlayerRatingHistoryComponent implements OnInit {
-  @Input() playerId: number;
+  @Input() playerId: number= 0;
 
   chartOptions: ChartOptions = {
     responsive: true,

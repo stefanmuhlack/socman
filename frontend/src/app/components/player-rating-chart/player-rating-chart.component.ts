@@ -4,11 +4,13 @@ import { PlayerRatingService } from '../../services/player-rating.service';
 import { PlayerRating } from '../../models/player-rating.model';
 
 @Component({
+  standalone: true,
   selector: 'app-player-rating-chart',
   templateUrl: './player-rating-chart.component.html',
+  imports: []
 })
 export class PlayerRatingChartComponent implements OnInit {
-  @Input() playerId: number;
+  @Input() playerId: number = 0;
 
   radarChartOptions: ChartOptions = {
     responsive: true,

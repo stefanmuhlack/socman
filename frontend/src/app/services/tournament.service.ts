@@ -13,4 +13,9 @@ export class TournamentService {
   getLeaderboard(tournamentId: number, page: number, pageSize: number): Observable<any> {
     return this.http.get(`${this.apiUrl}${tournamentId}/leaderboard?page=${page}&page_size=${pageSize}`);
   }
+
+  createTournament(tournament: any){
+    // TODO Implement Http Post
+    return {} as Observable<any>
+  }
 }

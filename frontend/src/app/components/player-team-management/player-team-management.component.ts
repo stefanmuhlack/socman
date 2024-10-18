@@ -3,6 +3,7 @@ import { PlayerTeamService } from '../../services/player-team.service';
 import { PlayerTeam } from '../../models/player-team.model';
 
 @Component({
+  standalone: true,
   selector: 'app-player-team-management',
   templateUrl: './player-team-management.component.html',
 })
