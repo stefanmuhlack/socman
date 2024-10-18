@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MatchFact } from './match-fact.model';
+import { MatchFact } from '../models/match-fact.model';
 
 @Injectable({
   providedIn: 'root'

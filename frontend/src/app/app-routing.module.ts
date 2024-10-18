@@ -4,7 +4,6 @@ import { TacticalPreparationComponent } from './components/tactical-preparation/
 import { TournamentLeaderboardComponent } from './components/tournament-leaderboard/tournament-leaderboard.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PlayerSelfAssessmentComponent } from './components/player-self-assessment/player-self-assessment.component';
-import { CreatePlayerRatingComponent } from './components/create-player-rating/create-player-rating.component';
 import { CreateMatchStatisticsComponent } from './components/match-statistics/match-statistics.component';
 import { PlayerRatingComponent } from './components/player-rating/player-rating.component';
 import { JerseyComponent } from './components/jersey/jersey.component';
@@ -16,13 +15,14 @@ const routes: Routes = [
   { path: 'tactical-preparation', component: TacticalPreparationComponent },
   { path: 'tournament-leaderboard', component: TournamentLeaderboardComponent },
   { path: 'player-self-assessment', component: PlayerSelfAssessmentComponent },
-  { path: 'create-player-rating', component: CreatePlayerRatingComponent },
+  { path: 'create-player-rating', component: PlayerRatingComponent },
   { path: 'create-match-statistics', component: CreateMatchStatisticsComponent },
   { path: 'player-rating', component: PlayerRatingComponent },
   { path: 'jersey', component: JerseyComponent },
   { path: 'notifications', component: NotificationComponent },
   { path: 'create-tournament', component: CreateTournamentComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // default route
+  { path: '*', redirectTo: '/dashboard', pathMatch: 'full' }, // default route
   { path: '**', redirectTo: '/dashboard' } // wildcard route
 ];
 

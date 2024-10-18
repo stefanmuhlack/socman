@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { MatchFactService } from '../../services/match-fact.service';
 import { MatchFact } from '../../models/match-fact.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
+  standalone: true,
   selector: 'app-create-match-fact',
   templateUrl: './create-match-fact.component.html',
+  imports: [CommonModule, FormsModule]
 })
 export class CreateMatchFactComponent {
   matchFact: MatchFact = {

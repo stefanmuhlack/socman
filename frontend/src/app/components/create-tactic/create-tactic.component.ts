@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { TacticalService } from '../../services/tactical.service';
+import { TacticService } from '../../services/tactic.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
+  standalone: true,
   selector: 'app-create-tactic',
   templateUrl: './create-tactic.component.html',
+  imports: [CommonModule, FormsModule]
 })
 export class CreateTacticComponent {
   tactics = {
@@ -16,18 +20,18 @@ export class CreateTacticComponent {
     ]
   };
 
-  constructor(private tacticalService: TacticalService) {}
+  constructor(private tacticsService: TacticService) {}
 
   saveTactic() {
     if (!this.tactics.positions.every(pos => pos.player_id)) {
       alert('Please assign all players to valid positions.');
       return;
     }
-    this.tacticalService.saveTactic(this.tactics).subscribe({
+    this.tacticsService.saveTactic(this.tactics).subscribe({
       next: () => {
         // Success handling
       },
-      error: (err) => {
+      error: (err: Error) => {
         alert('Error saving tactic: ' + err.message);
       }
     });

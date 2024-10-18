@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CustomMetricService } from '../../services/custom-metric.service';
 
 @Component({
+  standalone: true,
   selector: 'app-create-custom-metric',
   templateUrl: './create-custom-metric.component.html',
 })

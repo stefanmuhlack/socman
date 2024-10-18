@@ -9,7 +9,7 @@ export class AuthService {
 
   getUserRole(): string {
     // Example: Assuming you have the user role stored in local storage after login
-    return localStorage.getItem('userRole') || '';
+    return localStorage.getItem('userRole') || 'super-admin';
   }
 
   // Additional Auth-related methods

@@ -1,0 +1,24 @@
+<div>
+  <h3>Create Match Statistics</h3>
+  <form (ngSubmit)="submitStatistics()">
+    <label for="goals">Goals:</label>
+    <input type="number" [(ngModel)]="statistics.goals" name="goals">
+
+    <label for="assists">Assists:</label>
+    <input type="number" [(ngModel)]="statistics.assists" name="assists">
+
+    <label for="tackles">Tackles:</label>
+    <input type="number" [(ngModel)]="statistics.tackles" name="tackles">
+
+    <label for="passes-completed">Passes Completed:</label>
+    <input type="number" [(ngModel)]="statistics.passes_completed" name="passes-completed">
+
+    <label for="fouls">Fouls Committed:</label>
+    <input type="number" [(ngModel)]="statistics.fouls_committed" name="fouls">
+
+    <label for="minutes-played">Minutes Played:</label>
+    <input type="number" [(ngModel)]="statistics.minutes_played" name="minutes-played">
+
+    <button type="submit">Submit</button>
+  </form>
+</div>

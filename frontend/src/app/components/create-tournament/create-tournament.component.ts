@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { TournamentService } from '../../services/tournament.service';
 import { Tournament } from '../../models/tournament.model';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-create-tournament',
   templateUrl: './create-tournament.component.html',
+  imports: [FormsModule, CommonModule]
 })
 export class CreateTournamentComponent {
   tournament = {
@@ -34,7 +38,7 @@ export class CreateTournamentComponent {
       next: () => {
         // Handle success
       },
-      error: (err) => {
+      error: (err: Error) => {
         alert('Error creating tournament: ' + err.message);
       }
     });

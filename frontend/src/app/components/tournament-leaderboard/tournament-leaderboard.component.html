@@ -1,5 +1,5 @@
 <label for="tournament">Choose Tournament:</label>
-<select (change)="loadLeaderboard($event.target.value)">
+<select (change)="onTournamentSelectChange($event)">
   <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
 </select>
 
