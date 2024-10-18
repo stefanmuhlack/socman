@@ -8,9 +8,17 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getUserRole(): string {
-    // Example: Assuming you have the user role stored in local storage after login
-    return localStorage.getItem('userRole') || 'super-admin';
+    // Fetch the user role from local storage or token (could be enhanced later)
+    return localStorage.getItem('userRole') || 'player';
   }
 
-  // Additional Auth-related methods
+  isAuthenticated(): boolean {
+    // Simple check for token existence (replace with real implementation)
+    return !!localStorage.getItem('authToken');
+  }
+
+  // Example additional method to handle super-admin privileges
+  isSuperAdmin(): boolean {
+    return this.getUserRole() === 'super-admin';
+  }
 }

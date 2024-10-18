@@ -1,4 +1,4 @@
-<form (ngSubmit)="createTeam()">
+<form #teamForm="ngForm" (ngSubmit)="createTeam(teamForm)">
   <div class="form-group">
     <label for="name">Team Name</label>
     <input type="text" class="form-control" [(ngModel)]="team.name" name="name">

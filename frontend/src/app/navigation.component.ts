@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';  // Import the AuthService
 
 @Component({
   selector: 'app-navigation',
@@ -7,8 +8,13 @@ import { Component } from '@angular/core';
 })
 export class NavigationComponent {
   public isLoggedIn: boolean = false;
+  public userRole: string = '';
 
-  // Example method to toggle login state or fetch data.
+  constructor(private authService: AuthService) {
+    this.isLoggedIn = this.authService.isAuthenticated();
+    this.userRole = this.authService.getUserRole();  // Fetch the user's role
+  }
+
   public toggleLoginState() {
     this.isLoggedIn = !this.isLoggedIn;
   }

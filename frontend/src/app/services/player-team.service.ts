@@ -18,4 +18,8 @@ export class PlayerTeamService {
   addPlayerToTeam(playerTeam: PlayerTeam): Observable<PlayerTeam> {
     return this.http.post<PlayerTeam>(this.apiUrl, playerTeam);
   }
+
+  setActiveTeam(playerId: number, teamId: number): Observable<PlayerTeam> {
+    return this.http.put<PlayerTeam>(`${this.apiUrl}${playerId}/active`, { teamId });
+  }
 }

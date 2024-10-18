@@ -1,5 +1,23 @@
 <nav>
-    <button *ngIf="isLoggedIn" (click)="toggleLoginState()">Logout</button>
-    <button *ngIf="!isLoggedIn" (click)="toggleLoginState()">Login</button>
-  </nav>
-  
+  <ul>
+    <li *ngIf="userRole === 'super-admin'">
+      <a routerLink="/manage-admins">Manage Admins</a>
+    </li>
+    <li *ngIf="userRole === 'admin'">
+      <a routerLink="/create-league">Create League</a>
+      <a routerLink="/create-club">Create Club</a>
+      <a routerLink="/create-team">Create Team</a>
+      <a routerLink="/create-coach">Create Coach</a>
+    </li>
+    <li *ngIf="userRole === 'coach'">
+      <a routerLink="/create-player">Create Player</a>
+      <a routerLink="/player-rating">Player Rating</a>
+    </li>
+    <li *ngIf="userRole === 'player'">
+      <a routerLink="/player-self-assessment">Self Assessment</a>
+    </li>
+    <li>
+      <a routerLink="/dashboard">Dashboard</a>
+    </li>
+  </ul>
+</nav>

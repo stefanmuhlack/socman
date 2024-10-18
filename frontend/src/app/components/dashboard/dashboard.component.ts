@@ -14,15 +14,26 @@ export class DashboardComponent implements OnInit {
   userRole: string;
 
   constructor(private authService: AuthService, private playerRatingService: PlayerRatingService, private router: Router) {
-    this.userRole = ''
-   }
+    this.userRole = '';
+  }
 
   ngOnInit(): void {
     this.loadDashboard();
   }
 
   loadDashboard(): void {
-    this.userRole = this.authService.getUserRole(); // Fetch user role from AuthService
+    this.userRole = this.authService.getUserRole();  // Fetch user role from AuthService
+
+    // Load specific data based on role
+    if (this.userRole === 'super-admin') {
+      // Load super-admin-specific data
+    } else if (this.userRole === 'admin') {
+      // Load admin-specific data
+    } else if (this.userRole === 'coach') {
+      // Load coach-specific data
+    } else if (this.userRole === 'player') {
+      // Load player-specific data
+    }
   }
 
   exportPlayerData() {

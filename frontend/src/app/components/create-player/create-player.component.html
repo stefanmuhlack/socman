@@ -1,4 +1,4 @@
-<form (ngSubmit)="createPlayer()">
+<form #playerForm="ngForm" (ngSubmit)="createPlayer(playerForm)">
   <div class="form-group">
     <label for="name">Player Name</label>
     <input type="text" class="form-control" [(ngModel)]="player.name" name="name">
