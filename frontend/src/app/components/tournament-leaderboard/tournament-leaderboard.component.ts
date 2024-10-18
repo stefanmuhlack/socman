@@ -10,6 +10,7 @@ export class TournamentLeaderboardComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   totalItems = 0;
+  tournamentId = 0;
 
   constructor(private tournamentService: TournamentService) {}
 
