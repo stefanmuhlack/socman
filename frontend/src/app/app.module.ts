@@ -5,6 +5,14 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+
+@NgModule({
+  declarations: [
+    ...,
+    DashboardComponent
+  ],
+})
 
 @NgModule({
   declarations: [
